@@ -11,7 +11,7 @@
 #include "config.h"
 #include "rendering.h"
 
-static const std::string program_name = "Mandlebrot Explorer - by Joseph Shaker";
+static const std::string program_name = "Mandlebrot Explorer";
 
 //Take in as conditions what part of the fractal to calculate, 
 //then dump it into its alotted segment of &iterations
