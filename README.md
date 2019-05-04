@@ -3,7 +3,7 @@
 ## Purpose:
 The purpose of this program is to be an easy to use fractal explorer and a demo of interactivity using the SDL2 library.
 
-## DependancieS:
+## Dependancied:
 To install this program, one must have *SDL2* (available from their website or most package managers) and must have lpthreads (default on most POSIX systems)
 
 ## Compile & Install:
@@ -24,21 +24,21 @@ Run the program, you can then use the:
 
 arrow keys to pan 
 
-+/- to zoom. 
+*+*/*-*to zoom. 
 
-[ / ] to increase or decrease the amount of iterations done. Decreasing the iterations reduces sharpness but greatly speeds up rendering
+*[* / *]* to increase or decrease the amount of iterations done. Decreasing the iterations reduces sharpness but greatly speeds up rendering
 It could be nice to allow the image to be blurry while you find an area of interest, then sharpen for desired effect
 
-Q to quit
+*q* to quit
 
-H toggles to 'histogram view'
+*h* toggles to 'histogram view'
 
-M toggles to 'modulo view'
+*m* toggles to 'modulo view'
 
-Numbers 1 - 4 allow you to toggle between preloaded color maps from *src/config.cpp* (from this repo
+Numbers *1 - 4* allow you to toggle between preloaded color maps from *src/config.cpp* (from this repo
 1 and 2 are loaded with data, 3 and 4 are not).
 
-R to reset your view and scale back to the main fractal
+*r* to reset your view and scale back to the main fractal
 
 Currently Histogram view looks inconsistent. In some view it looks great and in others it looks iffy. 
 But I think the concept is good and efforts will be made to improve it.
@@ -82,7 +82,10 @@ However, the Modulo rendering tends to be more consistently nice. It also has zo
 The Histogram renderings are a bit finicky in my experience. It tends to look very nice on certain structures and
 confused on others. Playing with the gradient, and how much automtic vs manual shading can give you some interesting results.
 
-Here are some comparisons:
+Here are some comparisons. Look closely at the ring around the mandlebrot itself. The modulo's tend to show more detail 
+at the cost of looking bust or almost messy.
+
+By Contrast, around spirals or areas where the set is very thin (little black), the histogram coloring can look very nice.
 
 Modulo:
 
@@ -99,25 +102,3 @@ Modulo:
 Histogram:
 
 ![Histogram 2](/screenshots/histogram2.png?raw=true)
-
-Here are some extras:
-
-Wikipedia Color Scheme (modulo):
-
-x_min =    -1.7475429838556857387, x_max =    -1.7475429812841090094
-
-y_min = 6.0249427805793403368e-07, y_max = 6.0506585439303890429e-07
-
-![Wikipedia ColorSceme]( /screenshots/wikipedia_color_scheme.png?raw=true) 
-
-Spiral (histogram):
-
-![Spiral 1]( /screenshots/spiral1.png?raw=true) 
-
-Minibrot (histogram):
-
-![Minibrot 1]( /screenshots/minibrot1.png?raw=true) 
-
-Minibrot (histogram):
-
-![Minibrot 2](/screenshots/minibrot2.png?raw=true)
