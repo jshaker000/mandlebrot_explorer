@@ -190,18 +190,24 @@ int main()
                     case SDLK_p:
                         std::cout.precision( 20 );
                         std::cout << "----------------------------------------------------------------------\n"
-                                  << "x_min = " << std::setw( 25 ) << x_min << ", x_max = " << std::setw( 25 ) << x_max << '\n'
-                                  << "y_min = " << std::setw( 25 ) << y_min << ", y_max = " << std::setw( 25 ) << y_max << '\n'
-                                  << "current color_scheme: " << std::endl;
+                                  << "x_min = " << std::setw( 25 ) << x_min << ", x_max = " << std::setw( 25 ) << x_max << "\n"
+                                  << "y_min = " << std::setw( 25 ) << y_min << ", y_max = " << std::setw( 25 ) << y_max << "\n"
+                                  << "x_width = " << std::setw( 25 - 2 ) << x_width << "\n"
+                                  << "y_width = " << std::setw( 25 - 2 ) << y_width << "\n";
+                                  
+                        std::cout << "current color_scheme:\n"
+                                  << "{\n"
+                                  << std::hex << std::setfill ('0');
 
-                        std::cout << std::hex;
                         for ( int i = 0; i < current_colors.size(); i++ )
                         {
-                            std::cout << "{ 0x" << static_cast<int>( current_colors[ i ][ 0 ] )
-                                      << ", 0x" << static_cast<int>( current_colors[ i ][ 0 ] )
-                                      << ", 0x" << static_cast<int>( current_colors[ i ][ 0 ] ) << " }" << std::endl;
+                            std::cout << "    "
+                                      << "{ 0x" << std::setw( 2 ) << static_cast<int>( current_colors[ i ][ 0 ] )
+                                      << ", 0x" << std::setw( 2 ) << static_cast<int>( current_colors[ i ][ 0 ] )
+                                      << ", 0x" << std::setw( 2 ) << static_cast<int>( current_colors[ i ][ 0 ] ) << " }," << std::endl;
                         }
-                        std::cout << std::dec;
+                        std::cout << "};" << std::endl 
+                                  << std::dec << std::setfill(' ');
 
                         std::cout << "histogram_coloring? = " << histogram_color << "\n"
                                   << "number iterations = " << nIter << "\n"
