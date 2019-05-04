@@ -87,7 +87,9 @@ void mandlebrot::histogram_render ( const std::vector< std::vector <unsigned cha
 //color each pixel by the modulo of the iterations it took
 //this has the advantage of being zoom invariant, but can get messy
 void mandlebrot::modulo_render ( const std::vector< std::vector <unsigned char> > &current_colors,
-                                const std::vector<double> &iterations, int nIter, SDL_Renderer *renderer )
+                                 const std::vector<double> &iterations, int nIter,
+                                 int modulo_blend, 
+                                 SDL_Renderer *renderer )
 {
     for ( int i = 0; i < mandlebrot::pixelWidth; i++ )
     {
@@ -103,11 +105,20 @@ void mandlebrot::modulo_render ( const std::vector< std::vector <unsigned char> 
             else
             {
                 
-                int bucket_index  = static_cast<int>( std::floor( iterations[ i * mandlebrot::pixelWidth + j ] ) ) % current_colors.size();
+                int bucket_index  = static_cast<int>( std::floor( iterations[ i * mandlebrot::pixelWidth + j ] 
+                                    / modulo_blend ) ) % current_colors.size();
+
                 int bucket2_index = ( bucket_index + 1 ) % current_colors.size();
 
-                double blend = static_cast<double>( iterations[ i * mandlebrot::pixelWidth + j ] 
-                               - std::floor ( iterations[ i * mandlebrot::pixelWidth + j ] ) );
+                double tmp = iterations[ i * mandlebrot::pixelWidth + j ];
+                int tmp2;
+
+                for ( tmp2 = 0; tmp2 < tmp - modulo_blend; tmp2 += modulo_blend )
+                {
+                    ;
+                }
+
+                double blend = static_cast<double>( iterations[ i * mandlebrot::pixelWidth + j ] - tmp2 ) / modulo_blend;
 
                 red   = static_cast<char>( ( 1 - blend ) * current_colors[ bucket_index ][ mandlebrot::RED   ] 
                       + blend * current_colors[ bucket2_index ][ mandlebrot::RED   ] );

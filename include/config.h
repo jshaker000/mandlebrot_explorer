@@ -5,8 +5,17 @@
 
 namespace mandlebrot
 {
-    extern const double ZOOM_FACTOR;
-    extern const double SCROLL_FACTOR;
+    extern const int order_def;
+
+    extern const double COARSE_ZOOM_FACTOR;
+    extern const double FINE_ZOOM_FACTOR;
+    
+    extern const double COARSE_SCROLL_FACTOR;
+    extern const double FINE_SCROLL_FACTOR;
+
+    extern const double colorscheme_def;
+    extern const bool   histogram_color_def;
+    extern const int    modulo_blending_def;
 
     extern const int pixelWidth;
     extern const int NUM_THREADS;

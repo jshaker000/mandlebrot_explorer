@@ -67,12 +67,19 @@ void calculate_iterations( int i_start, int i_end, int j_start, int j_end, int p
 
 int main()
 {
-    bool histogram_color = 0;
-    bool recalculate =         1;
-    bool redraw      =         1;
+    bool recalculate = 1;
+    bool redraw      = 1;
+    bool quit        = 0;
 
-    int order        =         2;
-    bool quit        =         0;
+    int modulo_blending = mandlebrot::modulo_blending_def;
+    if ( modulo_blending < 1 )
+    {
+        modulo_blending = 1;
+    }
+
+    bool histogram_color = mandlebrot::histogram_color_def;
+
+    int order        = mandlebrot::order_def;
     int nIter        = mandlebrot::nIter_def;
 
     double x_min   =  mandlebrot::x_min_def;
@@ -83,8 +90,15 @@ int main()
     double y_width =  y_max - y_min;
 
     std::vector<double> iterations( mandlebrot::pixelWidth * mandlebrot::pixelWidth );
-
-    std::vector< std::vector <unsigned char> > current_colors = mandlebrot::color_maps[ 0 ];
+    std::vector< std::vector <unsigned char> > current_colors;
+    {
+        int current_map = mandlebrot::colorscheme_def;
+        if ( current_map < 0 || current_map >= mandlebrot::color_maps.size() )
+        {
+            current_map = 0;
+        }
+        current_colors = mandlebrot::color_maps[ current_map ];
+    }
 
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
     {
@@ -116,10 +130,6 @@ int main()
             //calculate iterations for the new mandlebrot
             const double y_inc = static_cast <double>( y_width ) / mandlebrot::pixelWidth;
             const double x_inc = static_cast <double>( x_width ) / mandlebrot::pixelWidth;
-            
-            std::cout << "----------------------------------------------------------------------\n"
-                      << "x_min = " << std::setw( 25 ) << x_min << ", x_max = " << std::setw( 25 ) << x_max << '\n'
-                      << "y_min = " << std::setw( 25 ) << y_min << ", y_max = " << std::setw( 25 ) << y_max << std::endl;
 
             //send off threads to calculate iterations for each slice of the fractal and then return back
             std::vector<std::thread> t;
@@ -154,7 +164,7 @@ int main()
             //else use modulo color
             else
             {
-                mandlebrot::modulo_render( current_colors, iterations, nIter, renderer );
+                mandlebrot::modulo_render( current_colors, iterations, nIter, modulo_blending, renderer );
             }
             SDL_RenderPresent(renderer);
             redraw = 0;
@@ -179,6 +189,46 @@ int main()
                         quit = true;;
                         break;
                     
+                    //print current state
+                    case SDLK_p:
+                        std::cout << "----------------------------------------------------------------------\n"
+                                  << "x_min = " << std::setw( 25 ) << x_min << ", x_max = " << std::setw( 25 ) << x_max << '\n'
+                                  << "y_min = " << std::setw( 25 ) << y_min << ", y_max = " << std::setw( 25 ) << y_max << '\n'
+                                  << "current color_scheme: " << std::endl;
+
+                        std::cout << std::hex;
+                        for ( int i = 0; i < current_colors.size(); i++ )
+                        {
+                            std::cout << "{ 0x" << static_cast<int>( current_colors[ i ][ 0 ] )
+                                      << ", 0x" << static_cast<int>( current_colors[ i ][ 0 ] )
+                                      << ", 0x" << static_cast<int>( current_colors[ i ][ 0 ] ) << " }" << std::endl;
+                        }
+                        std::cout << std::dec;
+
+                        std::cout << "histogram_coloring? = " << histogram_color << "\n"
+                                  << "number iterations = " << nIter << "\n"
+                                  << "modulo_blending = " << modulo_blending << std::endl;
+                        break;
+
+                    //print controls
+                    case SDLK_t:
+                        std::cout << "----------------------------------------------------------------------\n"
+                                  << "Controls:\n"
+                                  << "r         : reset to default view\n"
+                                  << "Arrow Keys: Coarse Pan\n"
+                                  << "hjkl      : Fine Pan\n"
+                                  << "+ / -     : Coarse Zoom\n"
+                                  << "y / u     : Fine Zoom\n"
+                                  << "[ / ]     : increase/decrease number of iterations. low iterations\n"
+                                  << "m/n       : modulo/histogram coloring\n"
+                                  << "i/o       : toggle the amount of modulo blending\n"
+                                  << "Nums 1-4  : toggle between precoded color maps in src/config.cpp\n"
+                                  << "            render faster, but miss detail\n"
+                                  << "p         : print current state\n"
+                                  << "q         : quit\n"
+                                  << "t         : pull up this menu" << std::endl;
+                        break;
+
                     //reset
                     case SDLK_r:
                         x_max = mandlebrot::x_max_def;
@@ -203,7 +253,7 @@ int main()
                         break;
 
                     //histogram coloring
-                    case SDLK_h:
+                    case SDLK_n:
                         if ( !histogram_color )
                         {
                             histogram_color = 1;
@@ -244,75 +294,156 @@ int main()
                         }
                         break;
 
+                    //change # of iterations
+                    //more
+                    case SDLK_LEFTBRACKET:
+                        nIter  *= ( 1.0 + ( mandlebrot::COARSE_ZOOM_FACTOR - 1.0 )  );
+                        recalculate = 1;
+                        break;
+                    //less
+                    case SDLK_RIGHTBRACKET:
+                        nIter  *= ( 1.0 / ( 1.0 + ( mandlebrot::COARSE_ZOOM_FACTOR - 1.0 ) ) );
+                        if ( nIter <= current_colors.size() + 5)
+                            nIter   = current_colors.size() + 5;
+                        recalculate = 1;
+                        break;
+
+                    //change amount of modulo blending
+                    //more
+                    case SDLK_i:
+                        modulo_blending++;
+                        redraw = 1;
+                        break;
+                    //less
+                    case SDLK_o:
+                        if ( modulo_blending > 1 )
+                            modulo_blending--;
+                        redraw = 1;
+                        break;
+
                     //zoom in
+                    //coarse
                     case SDLK_PLUS: case SDLK_EQUALS:
+                        x_max -= 0.5 * ( mandlebrot::COARSE_ZOOM_FACTOR - 1.0 ) * ( x_width );
+                        x_min += 0.5 * ( mandlebrot::COARSE_ZOOM_FACTOR - 1.0 ) * ( x_width );
 
-                        x_max -= 0.5 * ( mandlebrot::ZOOM_FACTOR - 1.0 ) * ( x_width );
-                        x_min += 0.5 * ( mandlebrot::ZOOM_FACTOR - 1.0 ) * ( x_width );
-
-                        y_max -= 0.5 * ( mandlebrot::ZOOM_FACTOR - 1.0 ) * ( y_width );
-                        y_min += 0.5 * ( mandlebrot::ZOOM_FACTOR - 1.0 ) * ( y_width );
+                        y_max -= 0.5 * ( mandlebrot::COARSE_ZOOM_FACTOR - 1.0 ) * ( y_width );
+                        y_min += 0.5 * ( mandlebrot::COARSE_ZOOM_FACTOR - 1.0 ) * ( y_width );
                         
                         x_width = x_max - x_min;
                         y_width = y_max - y_min;
-                        nIter   *= ( 1.0 + ( mandlebrot::ZOOM_FACTOR - 1.0 ) * ( mandlebrot::ZOOM_FACTOR - 1.0 ) );
+                        nIter   *= ( 1.0 + ( mandlebrot::COARSE_ZOOM_FACTOR - 1.0 ) * ( mandlebrot::COARSE_ZOOM_FACTOR - 1.0 ) );
+                        recalculate   = 1;
+                        break;
+
+                    //fine 
+                    case SDLK_y:
+                        x_max -= 0.5 * ( mandlebrot::FINE_ZOOM_FACTOR - 1.0 ) * ( x_width );
+                        x_min += 0.5 * ( mandlebrot::FINE_ZOOM_FACTOR - 1.0 ) * ( x_width );
+
+                        y_max -= 0.5 * ( mandlebrot::FINE_ZOOM_FACTOR - 1.0 ) * ( y_width );
+                        y_min += 0.5 * ( mandlebrot::FINE_ZOOM_FACTOR - 1.0 ) * ( y_width );
+                        
+                        x_width = x_max - x_min;
+                        y_width = y_max - y_min;
+                        nIter   *= ( 1.0 + ( mandlebrot::FINE_ZOOM_FACTOR - 1.0 ) * ( mandlebrot::FINE_ZOOM_FACTOR - 1.0 ) );
                         recalculate   = 1;
                         break;
 
                     //zoom out
+                    //coarse
                     case SDLK_MINUS: case SDLK_UNDERSCORE:
+                        x_max += 0.5 * ( mandlebrot::COARSE_ZOOM_FACTOR - 1.0 ) * ( x_width );
+                        x_min -= 0.5 * ( mandlebrot::COARSE_ZOOM_FACTOR - 1.0 ) * ( x_width );
 
-                        x_max += 0.5 * ( mandlebrot::ZOOM_FACTOR - 1.0 ) * ( x_width );
-                        x_min -= 0.5 * ( mandlebrot::ZOOM_FACTOR - 1.0 ) * ( x_width );
-
-                        y_max += 0.5 * ( mandlebrot::ZOOM_FACTOR - 1.0 ) * ( y_width );
-                        y_min -= 0.5 * ( mandlebrot::ZOOM_FACTOR - 1.0 ) * ( y_width );
+                        y_max += 0.5 * ( mandlebrot::COARSE_ZOOM_FACTOR - 1.0 ) * ( y_width );
+                        y_min -= 0.5 * ( mandlebrot::COARSE_ZOOM_FACTOR - 1.0 ) * ( y_width );
                         
                         x_width = x_max - x_min;
                         y_width = y_max - y_min;
-                        nIter   *= ( 1.0 / ( 1.0 + ( mandlebrot::ZOOM_FACTOR - 1.0 ) * ( mandlebrot::ZOOM_FACTOR - 1.0 ) ) );
+                        nIter   *= ( 1.0 / ( 1.0 + ( mandlebrot::COARSE_ZOOM_FACTOR - 1.0 ) * ( mandlebrot::COARSE_ZOOM_FACTOR - 1.0 ) ) );
                         if ( nIter <= current_colors.size() + 5)
                             nIter   = current_colors.size() + 5;
                         recalculate = 1;
                         break;
 
-                    case SDLK_LEFTBRACKET:
-                        nIter  *= ( 1.0 + ( mandlebrot::ZOOM_FACTOR - 1.0 )  );
-                        recalculate = 1;
-                        break;
+                    //fine
+                    case SDLK_u:
+                        x_max += 0.5 * ( mandlebrot::FINE_ZOOM_FACTOR - 1.0 ) * ( x_width );
+                        x_min -= 0.5 * ( mandlebrot::FINE_ZOOM_FACTOR - 1.0 ) * ( x_width );
 
-                    case SDLK_RIGHTBRACKET:
-                        nIter  *= ( 1.0 / ( 1.0 + ( mandlebrot::ZOOM_FACTOR - 1.0 ) ) );
+                        y_max += 0.5 * ( mandlebrot::FINE_ZOOM_FACTOR - 1.0 ) * ( y_width );
+                        y_min -= 0.5 * ( mandlebrot::FINE_ZOOM_FACTOR - 1.0 ) * ( y_width );
+                        
+                        x_width = x_max - x_min;
+                        y_width = y_max - y_min;
+                        nIter   *= ( 1.0 / ( 1.0 + ( mandlebrot::FINE_ZOOM_FACTOR - 1.0 ) * ( mandlebrot::FINE_ZOOM_FACTOR - 1.0 ) ) );
                         if ( nIter <= current_colors.size() + 5)
                             nIter   = current_colors.size() + 5;
                         recalculate = 1;
                         break;
 
-                    //move left
+                    //move left 
+                    //coarse
                     case SDLK_LEFT:
-                        x_max -= ( mandlebrot::SCROLL_FACTOR - 1.0 ) * x_width;
-                        x_min -= ( mandlebrot::SCROLL_FACTOR - 1.0 ) * x_width;
+                        x_max  -= ( mandlebrot::COARSE_SCROLL_FACTOR - 1.0 ) * x_width;
+                        x_min  -= ( mandlebrot::COARSE_SCROLL_FACTOR - 1.0 ) * x_width;
+                        x_width = x_max - x_min;
                         recalculate = 1;
                         break;
-                    
+                    //fine
+                    case SDLK_h:
+                        x_max  -= ( mandlebrot::FINE_SCROLL_FACTOR - 1.0 ) * x_width;
+                        x_min  -= ( mandlebrot::FINE_SCROLL_FACTOR - 1.0 ) * x_width;
+                        x_width = x_max - x_min;
+                        recalculate = 1;
+                        break;
+
                     //move right
+                    //coarse
                     case SDLK_RIGHT:
-                        x_max += ( mandlebrot::SCROLL_FACTOR - 1.0 ) * x_width;
-                        x_min += ( mandlebrot::SCROLL_FACTOR - 1.0 ) * x_width;
+                        x_max  += ( mandlebrot::COARSE_SCROLL_FACTOR - 1.0 ) * x_width;
+                        x_min  += ( mandlebrot::COARSE_SCROLL_FACTOR - 1.0 ) * x_width;
+                        x_width = x_max - x_min;
+                        recalculate = 1;
+                        break;
+                    //fine
+                    case SDLK_l:
+                        x_max  += ( mandlebrot::FINE_SCROLL_FACTOR - 1.0 ) * x_width;
+                        x_min  += ( mandlebrot::FINE_SCROLL_FACTOR - 1.0 ) * x_width;
+                        x_width = x_max - x_min;
                         recalculate = 1;
                         break;
 
                     //move up
+                    //coarse
                     case SDLK_UP:
-                        y_max += ( mandlebrot::SCROLL_FACTOR - 1.0 ) * y_width;
-                        y_min += ( mandlebrot::SCROLL_FACTOR - 1.0 ) * y_width;
+                        y_max  += ( mandlebrot::COARSE_SCROLL_FACTOR - 1.0 ) * y_width;
+                        y_min  += ( mandlebrot::COARSE_SCROLL_FACTOR - 1.0 ) * y_width;
+                        y_width = y_max - y_min;
+                        recalculate = 1;
+                        break;
+                    //fine
+                    case SDLK_k:
+                        y_max  += ( mandlebrot::FINE_SCROLL_FACTOR - 1.0 ) * y_width;
+                        y_min  += ( mandlebrot::FINE_SCROLL_FACTOR - 1.0 ) * y_width;
+                        y_width = y_max - y_min;
                         recalculate = 1;
                         break;
 
                     //move down
+                    //coarse
                     case SDLK_DOWN:
-                        y_max -= ( mandlebrot::SCROLL_FACTOR - 1.0 ) * y_width;
-                        y_min -= ( mandlebrot::SCROLL_FACTOR - 1.0 ) * y_width;
+                        y_max  -= ( mandlebrot::COARSE_SCROLL_FACTOR - 1.0 ) * y_width;
+                        y_min  -= ( mandlebrot::COARSE_SCROLL_FACTOR - 1.0 ) * y_width;
+                        y_width = y_max - y_min;
+                        recalculate = 1;
+                        break;
+                    //fine
+                    case SDLK_j:
+                        y_max  -= ( mandlebrot::FINE_SCROLL_FACTOR - 1.0 ) * y_width;
+                        y_min  -= ( mandlebrot::FINE_SCROLL_FACTOR - 1.0 ) * y_width;
+                        y_width = y_max - y_min;
                         recalculate = 1;
                         break;
 
