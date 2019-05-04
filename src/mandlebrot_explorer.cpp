@@ -118,15 +118,12 @@ int main()
         return 1;
     }
 
-    std::cout.precision( 20 );
-
     SDL_SetWindowPosition(window, 10, 10);
     
     while ( !quit )
     {
         if ( recalculate )
         {
-            
             //calculate iterations for the new mandlebrot
             const double y_inc = static_cast <double>( y_width ) / mandlebrot::pixelWidth;
             const double x_inc = static_cast <double>( x_width ) / mandlebrot::pixelWidth;
@@ -191,6 +188,7 @@ int main()
                     
                     //print current state
                     case SDLK_p:
+                        std::cout.precision( 20 );
                         std::cout << "----------------------------------------------------------------------\n"
                                   << "x_min = " << std::setw( 25 ) << x_min << ", x_max = " << std::setw( 25 ) << x_max << '\n'
                                   << "y_min = " << std::setw( 25 ) << y_min << ", y_max = " << std::setw( 25 ) << y_max << '\n'
@@ -219,7 +217,8 @@ int main()
                                   << "hjkl      : Fine Pan\n"
                                   << "+ / -     : Coarse Zoom\n"
                                   << "y / u     : Fine Zoom\n"
-                                  << "[ / ]     : increase/decrease number of iterations. low iterations\n"
+                                  << "[ / ]     : increase/decrease number of iterations. "
+                                  << "            low iterations are easier to render but lack sharpness\n"
                                   << "m/n       : modulo/histogram coloring\n"
                                   << "i/o       : toggle the amount of modulo blending\n"
                                   << "Nums 1-4  : toggle between precoded color maps in src/config.cpp\n"
