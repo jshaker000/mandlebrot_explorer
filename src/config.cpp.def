@@ -27,6 +27,10 @@ const int    mandlebrot::RED           = 0;
 const int    mandlebrot::GREEN         = 1;
 const int    mandlebrot::BLUE          = 2;
 
+//you can add your own color map by following the templates shown below
+//each map should have a set of RGB triples
+//The first value is the furthest from the set, wheras the last would be hugging the set
+//The set itself is fixed as black
 const std::vector< std::vector< std::vector < unsigned char> > > mandlebrot::color_maps = 
 {
     //My custom coloring scheme. Could be better but its something
@@ -40,7 +44,7 @@ const std::vector< std::vector< std::vector < unsigned char> > > mandlebrot::col
         { 0xFF, 0x5E, 0x00 }, //orange
         { 0xF5, 0xEF, 0x47 }, //yellow
         { 0xE0, 0xE0, 0xE0 }, //nearly white
-    }
+    },
     //Wikipedia's color scheme. Looks very nice with modulo but
     //pretty lame with histogram coloring
     {
@@ -60,5 +64,5 @@ const std::vector< std::vector< std::vector < unsigned char> > > mandlebrot::col
         { 0xCC, 0x80, 0x00 }, // brown 0
         { 0x99, 0x57, 0x00 }, // brown 1
         { 0x6A, 0x34, 0x03 }, // brown 2
-    }
+    },
 };
