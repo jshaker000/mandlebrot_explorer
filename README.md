@@ -30,10 +30,10 @@ Run the program, you can then use the:
 
 *y* / *u*    to fine zoom
 
-*[* / *]* to increase or decrease the amount of iterations done. Decreasing the iterations reduces sharpness but greatly speeds up rendering
-It could be nice to allow the image to be blurry while you find an area of interest, then sharpen for desired effect
+*[* / *]* to increase or decrease the amount of iterations done. Decreasing the iterations reduces sharpness but greatly speeds up rendering. It could be nice to allow the image to be blurry while you find an area of interest, speed drawing, then sharpen for desired effect
 
-*i* / *o* increases or decreases the amount of modulo blending
+*i* / *o* increases or decreases the amount of modulo blending. This is crucial to get things to look coherent at
+different zoom levels.
 
 *m* toggles to 'modulo view'
 
