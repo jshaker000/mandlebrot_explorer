@@ -58,26 +58,36 @@ After customizing, you must re-run make and make install, but it should be fairl
 1)  Allow easier customazation than changing source code
 2)  Have a better interface to scroll multiple steps at once, 
     perhaps click and drag and/or boxes to type in Xmin/Xmax Ymin/Tmax
-3)  More intillegently setup a color gradient. Now it is easy to look good at some zoom levels but garbage at others
-    More intellegent "bucket" placing
+3)  More intillegently setup a color gradient. Now histogram is easy to looks good at some zoom levels but garbage at others
+    More intellegent "bucket" placing for histogram
 4)  More intellegently split work between threads, rather than having each take a stripe.
     Maybe guess where the most work would need to be done?
 
 ## Examples Images
 
-Spiral 1 - Lost coordinates
+Depending on what you are looking for, both the Historgram and Modulo renderings can look nice. However, the Histogram rendering tends
+to be more consistently nice. Here are some comparisons:
+
+
+Modulo:
+![Modulo 1]( /screenshots/modulo1.png?raw=true) 
+
+Histogram:
+![Histogram 1]( /screenshots/histogram1.png?raw=true) 
+
+Modulo:
+![Modulo 2](/screenshots/modulo2.png?raw=true)
+
+Histogram
+![Histogram 2](/screenshots/histogram2.png?raw=true)
+
+Here are some extras (all with histogram):
+
+Spiral
 ![Spiral 1]( /screenshots/spiral1.png?raw=true) 
 
-Minibrot 1 - 
-
-x_min = -0.104875, x_max = -0.104863
-
-y_min = 0.928054,  y_max = 0.928066
+Minibrot
 ![Minibrot 1]( /screenshots/minibrot1.png?raw=true) 
 
-Minibrot 2 -
-
-x_min =  0.269192,   x_max = 0.269192
-
-y_min = -0.00440459, y_max = -0.00440459
+Minibrot
 ![Minibrot 2](/screenshots/minibrot2.png?raw=true)
