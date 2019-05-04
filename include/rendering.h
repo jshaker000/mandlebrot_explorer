@@ -2,6 +2,7 @@
 #define RENDERING_H
 
 #include <SDL2/SDL.h>
+#include <vector>
 
 namespace mandlebrot
 {
