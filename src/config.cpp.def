@@ -33,18 +33,6 @@ const int    mandlebrot::BLUE          = 2;
 //The set itself is fixed as black
 const std::vector< std::vector< std::vector < unsigned char> > > mandlebrot::color_maps = 
 {
-    //My custom coloring scheme. Could be better but its something
-    //to start with
-    {
-        { 0x30, 0xFC, 0x9E }, //teal
-        { 0x20, 0xDF, 0xCC }, //sky blue
-        { 0x3A, 0x91, 0xE8 }, //blue
-        { 0xD4, 0x26, 0xE8 }, //magenta
-        { 0xE4, 0x36, 0x48 }, //red
-        { 0xFF, 0x5E, 0x00 }, //orange
-        { 0xF5, 0xEF, 0x47 }, //yellow
-        { 0xE0, 0xE0, 0xE0 }, //nearly white
-    },
     //Wikipedia's color scheme. Looks very nice with modulo but
     //pretty lame with histogram coloring
     {
@@ -64,5 +52,18 @@ const std::vector< std::vector< std::vector < unsigned char> > > mandlebrot::col
         { 0xCC, 0x80, 0x00 }, // brown 0
         { 0x99, 0x57, 0x00 }, // brown 1
         { 0x6A, 0x34, 0x03 }, // brown 2
+    },
+    //My custom coloring scheme. Could be better but its something
+    //to start with
+    //pretty ggod with histogram but not great with modulo
+    {
+        { 0x30, 0xFC, 0x9E }, //teal
+        { 0x20, 0xDF, 0xCC }, //sky blue
+        { 0x3A, 0x91, 0xE8 }, //blue
+        { 0xD4, 0x26, 0xE8 }, //magenta
+        { 0xE4, 0x36, 0x48 }, //red
+        { 0xFF, 0x5E, 0x00 }, //orange
+        { 0xF5, 0xEF, 0x47 }, //yellow
+        { 0xE0, 0xE0, 0xE0 }, //nearly white
     },
 };
