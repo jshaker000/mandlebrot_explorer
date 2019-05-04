@@ -9,21 +9,22 @@
 //similar iterations will be similar color and we will shade the difference
 //this way, in theory each 1/NUM_BUCKETS group will have a similar color
 //In theory, each Bucket should then have TOTAL_PIXELS/NUM_BUCKETS in it
-void mandlebrot::histogram_render ( const std::vector<double> &iterations, int nIter, SDL_Renderer *renderer )
+void mandlebrot::histogram_render ( const std::vector< std::vector <unsigned char> > &current_colors,
+                                    const std::vector<double> &iterations, int nIter, SDL_Renderer *renderer )
 {
     std::vector<double> temp(iterations);
     std::sort( temp.begin(), temp.end() );
-    double buckets[ mandlebrot::colors.size() ];
+    double buckets[ current_colors.size() ];
 
-    for ( int i = 0; i < mandlebrot::colors.size(); i++ )
+    for ( int i = 0; i < current_colors.size(); i++ )
 
     {
-        buckets[ i ] = temp[ ( ( temp.size() * ( i + 1 ) ) / mandlebrot::colors.size() ) - 1 ];
+        buckets[ i ] = temp[ ( ( temp.size() * ( i + 1 ) ) / current_colors.size() ) - 1 ];
     }
 
     //ensure no 2 buckets have the same iteration count
     //this is very rudimentary and should be improved for smoother coloring
-    for ( int i = 0; i < mandlebrot::colors.size() - 1; i++ )
+    for ( int i = 0; i < current_colors.size() - 1; i++ )
     {
         if ( buckets[ i ] == buckets[ i + 1 ] )
         {
@@ -43,7 +44,7 @@ void mandlebrot::histogram_render ( const std::vector<double> &iterations, int n
         for ( int j = 0; j < mandlebrot::pixelWidth; j++ )
         {
             int bucket_index;
-            for ( bucket_index = 0; bucket_index < mandlebrot::colors.size(); bucket_index++ )
+            for ( bucket_index = 0; bucket_index < current_colors.size(); bucket_index++ )
             {
                 if ( iterations[ i * mandlebrot::pixelWidth + j ] <= buckets[ bucket_index ] )
                     break;
@@ -59,9 +60,9 @@ void mandlebrot::histogram_render ( const std::vector<double> &iterations, int n
             }
             else if ( bucket_index == 0 )
             {
-                red   = mandlebrot::colors[ 0 ][ mandlebrot::RED   ];
-                green = mandlebrot::colors[ 0 ][ mandlebrot::GREEN ];
-                blue  = mandlebrot::colors[ 0 ][ mandlebrot::BLUE  ];
+                red   = current_colors[ 0 ][ mandlebrot::RED   ];
+                green = current_colors[ 0 ][ mandlebrot::GREEN ];
+                blue  = current_colors[ 0 ][ mandlebrot::BLUE  ];
             }
             else
             {
@@ -69,12 +70,12 @@ void mandlebrot::histogram_render ( const std::vector<double> &iterations, int n
                 double blend = static_cast<double>( iterations[ i * mandlebrot::pixelWidth + j ] - buckets[ bucket_index - 1 ] ) 
                         / static_cast<double>( buckets[ bucket_index ] - buckets[ bucket_index - 1 ] );
 
-                red   = static_cast<char>( ( 1 - blend ) * mandlebrot::colors[ bucket_index - 1 ][ mandlebrot::RED   ] 
-                        + blend * mandlebrot::colors[ bucket_index ][ mandlebrot::RED   ] );
-                green = static_cast<char>( ( 1 - blend ) * mandlebrot::colors[ bucket_index - 1 ][ mandlebrot::GREEN ] 
-                        + blend * mandlebrot::colors[ bucket_index ][ mandlebrot::GREEN ] );
-                blue  = static_cast<char>( ( 1 - blend ) * mandlebrot::colors[ bucket_index - 1 ][ mandlebrot::BLUE  ] 
-                        + blend * mandlebrot::colors[ bucket_index ][ mandlebrot::BLUE  ] );
+                red   = static_cast<char>( ( 1 - blend ) * current_colors[ bucket_index - 1 ][ mandlebrot::RED   ] 
+                        + blend * current_colors[ bucket_index ][ mandlebrot::RED   ] );
+                green = static_cast<char>( ( 1 - blend ) * current_colors[ bucket_index - 1 ][ mandlebrot::GREEN ] 
+                        + blend * current_colors[ bucket_index ][ mandlebrot::GREEN ] );
+                blue  = static_cast<char>( ( 1 - blend ) * current_colors[ bucket_index - 1 ][ mandlebrot::BLUE  ] 
+                        + blend * current_colors[ bucket_index ][ mandlebrot::BLUE  ] );
             }
             SDL_SetRenderDrawColor( renderer, red, green, blue, 0xFF );
             SDL_RenderDrawPoint   (renderer, j, i);
@@ -84,7 +85,8 @@ void mandlebrot::histogram_render ( const std::vector<double> &iterations, int n
 
 //color each pixel by the modulo of the iterations it took
 //this has the advantage of being zoom invariant, but can get messy
-void mandlebrot::modulo_render ( const std::vector<double> &iterations, int nIter, SDL_Renderer *renderer )
+void mandlebrot::modulo_render ( const std::vector< std::vector <unsigned char> > &current_colors,
+                                const std::vector<double> &iterations, int nIter, SDL_Renderer *renderer )
 {
     for ( int i = 0; i < mandlebrot::pixelWidth; i++ )
     {
@@ -100,20 +102,20 @@ void mandlebrot::modulo_render ( const std::vector<double> &iterations, int nIte
             else
             {
                 
-                int bucket_index  = static_cast<int>( std::floor( iterations[ i * mandlebrot::pixelWidth + j ] ) ) % mandlebrot::colors.size();
-                int bucket2_index = ( bucket_index + 1 ) % mandlebrot::colors.size();
+                int bucket_index  = static_cast<int>( std::floor( iterations[ i * mandlebrot::pixelWidth + j ] ) ) % current_colors.size();
+                int bucket2_index = ( bucket_index + 1 ) % current_colors.size();
 
                 double blend = static_cast<double>( iterations[ i * mandlebrot::pixelWidth + j ] 
                                - std::floor ( iterations[ i * mandlebrot::pixelWidth + j ] ) );
 
-                red   = static_cast<char>( ( 1 - blend ) * mandlebrot::colors[ bucket_index ][ mandlebrot::RED   ] 
-                      + blend * mandlebrot::colors[ bucket2_index ][ mandlebrot::RED   ] );
+                red   = static_cast<char>( ( 1 - blend ) * current_colors[ bucket_index ][ mandlebrot::RED   ] 
+                      + blend * current_colors[ bucket2_index ][ mandlebrot::RED   ] );
                 
-                green = static_cast<char>( ( 1 - blend ) * mandlebrot::colors[ bucket_index ][ mandlebrot::GREEN ] 
-                      + blend * mandlebrot::colors[ bucket2_index ][ mandlebrot::GREEN ] );
+                green = static_cast<char>( ( 1 - blend ) * current_colors[ bucket_index ][ mandlebrot::GREEN ] 
+                      + blend * current_colors[ bucket2_index ][ mandlebrot::GREEN ] );
                 
-                blue  = static_cast<char>( ( 1 - blend ) * mandlebrot::colors[ bucket_index ][ mandlebrot::BLUE  ] 
-                      + blend * mandlebrot::colors[ bucket2_index ][ mandlebrot::BLUE  ] );
+                blue  = static_cast<char>( ( 1 - blend ) * current_colors[ bucket_index ][ mandlebrot::BLUE  ] 
+                      + blend * current_colors[ bucket2_index ][ mandlebrot::BLUE  ] );
             }
             SDL_SetRenderDrawColor( renderer, red, green, blue, 0xFF );
             SDL_RenderDrawPoint   (renderer, j, i);

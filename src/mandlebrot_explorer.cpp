@@ -68,10 +68,12 @@ void calculate_iterations( int i_start, int i_end, int j_start, int j_end, int p
 int main()
 {
     bool histogram_color = 0;
-    int nIter       = mandlebrot::nIter_def;
-    int order       =         2;
-    bool quit       =         0;
-    bool rerender   =         1;
+    bool recalculate =         1;
+    bool recolor     =         1;
+
+    int order        =         2;
+    bool quit        =         0;
+    int nIter        = mandlebrot::nIter_def;
 
     double x_min   =  mandlebrot::x_min_def;
     double x_max   =  mandlebrot::x_max_def;
@@ -81,6 +83,8 @@ int main()
     double y_width =  y_max - y_min;
 
     std::vector<double> iterations( mandlebrot::pixelWidth * mandlebrot::pixelWidth );
+
+    std::vector< std::vector <unsigned char> > current_colors = mandlebrot::color_maps[ 0 ];
 
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
     {
@@ -106,7 +110,7 @@ int main()
     
     while ( !quit )
     {
-        if ( rerender )
+        if ( recalculate )
         {
             SDL_RenderClear(renderer);
             
@@ -137,21 +141,24 @@ int main()
             {
                 t[ i ].join();
             }
-
+            recalculate = 0;
+        }
+        if( recolor )
+        {
             if ( histogram_color )
             {
-                mandlebrot::histogram_render( iterations, nIter, renderer );
+                mandlebrot::histogram_render( current_colors, iterations, nIter, renderer );
             }
 
             //else use modulo color
             else
             {
-                mandlebrot::modulo_render( iterations, nIter, renderer );
+                mandlebrot::modulo_render( current_colors, iterations, nIter, renderer );
             }
             SDL_RenderPresent(renderer);
-            rerender = 0;
+            recolor = 0;
         }
-        
+
         std::this_thread::sleep_for(std::chrono::milliseconds( 50 ) );
 
         while (SDL_PollEvent(&e))
@@ -182,17 +189,52 @@ int main()
                         x_width  = x_max - x_min;
                         y_width  = y_max - y_min;
                         nIter    = mandlebrot::nIter_def;
-                        rerender = 1;
+                        recalculate = 1;
                         break;
 
+                    //modulo coloring
                     case SDLK_m:
                         histogram_color = 0;
-                        rerender = 1;
+                        recolor = 1;
                         break;
 
+                    //histogram coloring
                     case SDLK_h:
                         histogram_color = 1;
-                        rerender = 1;
+                        recolor = 1;
+                        break;
+
+                    //change color profile
+                    case SDLK_1:
+                        if( mandlebrot::color_maps.size() >= 1 )
+                        {
+                            current_colors = mandlebrot::color_maps[ 1 - 1 ];
+                        }
+                        recolor = 1;
+                        break;
+                    
+                    case SDLK_2:
+                        if( mandlebrot::color_maps.size() >= 2 )
+                        {
+                            current_colors = mandlebrot::color_maps[ 2 - 1 ];
+                        }
+                        recolor = 1;
+                        break;
+                    
+                    case SDLK_3:
+                        if( mandlebrot::color_maps.size() >= 3 )
+                        {
+                            current_colors = mandlebrot::color_maps[ 3 - 1 ];
+                        }
+                        recolor = 1;
+                        break;
+                    
+                    case SDLK_4:
+                        if( mandlebrot::color_maps.size() >= 4 )
+                        {
+                            current_colors = mandlebrot::color_maps[ 4 - 1 ];
+                        }
+                        recolor = 1;
                         break;
 
                     //zoom in
@@ -207,7 +249,7 @@ int main()
                         x_width = x_max - x_min;
                         y_width = y_max - y_min;
                         nIter   *= ( 1.0 + ( mandlebrot::ZOOM_FACTOR - 1.0 ) * ( mandlebrot::ZOOM_FACTOR - 1.0 ) );
-                        rerender   = 1;
+                        recalculate   = 1;
                         break;
 
                     //zoom out
@@ -222,54 +264,55 @@ int main()
                         x_width = x_max - x_min;
                         y_width = y_max - y_min;
                         nIter   *= ( 1.0 / ( 1.0 + ( mandlebrot::ZOOM_FACTOR - 1.0 ) * ( mandlebrot::ZOOM_FACTOR - 1.0 ) ) );
-                        if ( nIter <= mandlebrot::colors.size() + 5)
-                            nIter = mandlebrot::colors.size() + 5;
-                        rerender = 1;
+                        if ( nIter <= current_colors.size() + 5)
+                            nIter   = current_colors.size() + 5;
+                        recalculate = 1;
                         break;
 
                     case SDLK_LEFTBRACKET:
                         nIter  *= ( 1.0 + ( mandlebrot::ZOOM_FACTOR - 1.0 )  );
-                        rerender = 1;
+                        recalculate = 1;
                         break;
 
                     case SDLK_RIGHTBRACKET:
                         nIter  *= ( 1.0 / ( 1.0 + ( mandlebrot::ZOOM_FACTOR - 1.0 ) ) );
-                        if ( nIter <= mandlebrot::colors.size() + 5)
-                            nIter = mandlebrot::colors.size() + 5;
-                        rerender = 1;
+                        if ( nIter <= current_colors.size() + 5)
+                            nIter   = current_colors.size() + 5;
+                        recalculate = 1;
                         break;
 
                     //move left
                     case SDLK_LEFT:
                         x_max -= ( mandlebrot::SCROLL_FACTOR - 1.0 ) * x_width;
                         x_min -= ( mandlebrot::SCROLL_FACTOR - 1.0 ) * x_width;
-                        rerender = 1;
+                        recalculate = 1;
                         break;
                     
                     //move right
                     case SDLK_RIGHT:
                         x_max += ( mandlebrot::SCROLL_FACTOR - 1.0 ) * x_width;
                         x_min += ( mandlebrot::SCROLL_FACTOR - 1.0 ) * x_width;
-                        rerender = 1;
+                        recalculate = 1;
                         break;
 
                     //move up
                     case SDLK_UP:
                         y_max += ( mandlebrot::SCROLL_FACTOR - 1.0 ) * y_width;
                         y_min += ( mandlebrot::SCROLL_FACTOR - 1.0 ) * y_width;
-                        rerender = 1;
+                        recalculate = 1;
                         break;
 
                     //move down
                     case SDLK_DOWN:
                         y_max -= ( mandlebrot::SCROLL_FACTOR - 1.0 ) * y_width;
                         y_min -= ( mandlebrot::SCROLL_FACTOR - 1.0 ) * y_width;
-                        rerender = 1;
+                        recalculate = 1;
                         break;
 
                     default:
                         break;
                 }
+                recolor |= recalculate;
             }
         }
     }

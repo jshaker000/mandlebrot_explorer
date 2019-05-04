@@ -28,7 +28,7 @@ namespace mandlebrot
     extern const int GREEN;
     extern const int BLUE;
 
-    extern const std::vector< std::vector<unsigned char> > colors;
+    extern const std::vector< std::vector< std::vector < unsigned char> > > color_maps;
 }
 
 #endif
