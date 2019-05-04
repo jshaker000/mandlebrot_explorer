@@ -69,9 +69,10 @@ After customizing, you must re-run make and make install, but it should be fairl
 
 Depending on what you are looking for, both the Historgram and Modulo renderings can look nice.
 
-However, the Modulo rendering tends to be more consistently nice.
+However, the Modulo rendering tends to be more consistently nice. It also has zoom invariance
 
-The Histogram renderings are a bit finicky in my experience.
+The Histogram renderings are a bit finicky in my experience. It tends to look very nice on certain structures and
+confused on others. Playing with the gradient, and how much automtic vs manual shading can give you some interesting results.
 
 Here are some comparisons:
 
@@ -91,16 +92,24 @@ Histogram:
 
 ![Histogram 2](/screenshots/histogram2.png?raw=true)
 
-Here are some extras (all with histogram):
+Here are some extras:
 
-Spiral:
+Wikipedia Color Scheme (modulo):
+
+x_min =    -1.7475429838556857387, x_max =    -1.7475429812841090094
+
+y_min = 6.0249427805793403368e-07, y_max = 6.0506585439303890429e-07
+
+![Wikipedia ColorSceme]( /screenshots/wikipedia_color_scheme.png?raw=true) 
+
+Spiral (histogram):
 
 ![Spiral 1]( /screenshots/spiral1.png?raw=true) 
 
-Minibrot:
+Minibrot (histogram):
 
 ![Minibrot 1]( /screenshots/minibrot1.png?raw=true) 
 
-Minibrot:
+Minibrot (histogram):
 
 ![Minibrot 2](/screenshots/minibrot2.png?raw=true)
