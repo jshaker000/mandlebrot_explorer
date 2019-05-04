@@ -26,7 +26,8 @@ arrow keys to pan
 
 +/- to zoom. 
 
-[ / ] to increase or decrease the amount of iterations done
+[ / ] to increase or decrease the amount of iterations done. Decreasing the iterations reduces sharpness but greatly speeds up rendering
+It could be nice to allow the image to be blurry while you find an area of interest, then sharpen for desired effect
 
 Q to quit
 
@@ -34,10 +35,11 @@ H toggles to 'histogram view'
 
 M toggles to 'modulo view'
 
-R to reset your view
+R to reset your view and scale back to the main fractal
 
+Currently Histogram view looks inconsistent. In some view it looks great and in others it looks iffy. 
+But I think the concept is good and efforts will be made to improve it.
 
-Currently Histogram view looks poor, but I think the concept is good and efforts will be made to improve it.
 Efforts will also be made to have seperate keybindings for smooth / coarse zoom and pan
 
 ### Customization:
