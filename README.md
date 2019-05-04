@@ -22,23 +22,33 @@ To uninstall the program, run:
 
 Run the program, you can then use the:
 
-*arrow keys* to pan 
+*arrow keys* to fine pan 
 
-*+* / *-* to zoom. 
+*hjkl*       to coarse pan
+
+*+* / *-*    to coarse zoom
+
+*y* / *u*    to fine zoom
 
 *[* / *]* to increase or decrease the amount of iterations done. Decreasing the iterations reduces sharpness but greatly speeds up rendering
 It could be nice to allow the image to be blurry while you find an area of interest, then sharpen for desired effect
 
-*q* to quit
-
-*h* toggles to 'histogram view'
+*i* / *o* increases or decreases the amount of modulo blending
 
 *m* toggles to 'modulo view'
+
+*n* toggles to 'histogram view'
 
 Numbers *1 - 4* allow you to toggle between preloaded color maps from *src/config.cpp* (from this repo
 1 and 2 are loaded with data, 3 and 4 are not).
 
 *r* to reset your view and scale back to the main fractal
+
+*p* to print the current state, to replicate it
+
+*q* to quit
+
+*t* to pull up the controls menu
 
 Currently Histogram view looks inconsistent. In some view it looks great and in others it looks iffy. 
 But I think the concept is good and efforts will be made to improve it.
