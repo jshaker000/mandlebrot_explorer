@@ -15,7 +15,7 @@ const double mandlebrot::y_max_def =  2.5;
 
 //a big bailout radius makes calculations slower but improves the 
 //color smoothening algorithm
-const int    mandlebrot::BAILOUT_RADIUS = 2 << 10;
+const int    mandlebrot::BAILOUT_RADIUS = 2 << 16;
 
 //Color palette in RGB
 //Top row is min iterations to escape
