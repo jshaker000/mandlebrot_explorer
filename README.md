@@ -50,10 +50,8 @@ Numbers *1 - 4* allow you to toggle between preloaded color maps from *src/confi
 
 *t* to pull up the controls menu
 
-Currently Histogram view looks inconsistent. In some view it looks great and in others it looks iffy. 
-But I think the concept is good and efforts will be made to improve it.
-
-Efforts will also be made to have seperate keybindings for smooth / coarse zoom and pan
+All printing statements will show up on the terminal you used to call the program, but effort
+will be made to made interactions more graphical.
 
 ### Customization:
 
