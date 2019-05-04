@@ -157,7 +157,7 @@ int main()
                 mandlebrot::modulo_render( current_colors, iterations, nIter, renderer );
             }
             SDL_RenderPresent(renderer);
-            recolor = 0;
+            redraw = 0;
         }
 
         std::this_thread::sleep_for(std::chrono::milliseconds( 50 ) );
