@@ -3,7 +3,7 @@
 ## Purpose:
 The purpose of this program is to be an easy to use fractal explorer and a demo of interactivity using the SDL2 library.
 
-## Dependancied:
+## Dependancies:
 To install this program, one must have *SDL2* (available from their website or most package managers) and must have lpthreads (default on most POSIX systems)
 
 ## Compile & Install:
@@ -22,9 +22,9 @@ To uninstall the program, run:
 
 Run the program, you can then use the:
 
-arrow keys to pan 
+*arrow keys* to pan 
 
-*+*/*-*to zoom. 
+*+* / *-* to zoom. 
 
 *[* / *]* to increase or decrease the amount of iterations done. Decreasing the iterations reduces sharpness but greatly speeds up rendering
 It could be nice to allow the image to be blurry while you find an area of interest, then sharpen for desired effect
@@ -93,7 +93,7 @@ Modulo:
 
 Histogram:
 
-![Histogram 1]( /screenshots/histogram1.png?raw=true) 
+![Histogram 2](/screenshots/histogram2.png?raw=true)
 
 Modulo:
 
@@ -101,4 +101,4 @@ Modulo:
 
 Histogram:
 
-![Histogram 2](/screenshots/histogram2.png?raw=true)
+![Histogram 1]( /screenshots/histogram1.png?raw=true) 
