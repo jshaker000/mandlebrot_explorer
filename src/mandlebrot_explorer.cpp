@@ -69,7 +69,7 @@ int main()
 {
     bool histogram_color = 0;
     bool recalculate =         1;
-    bool recolor     =         1;
+    bool redraw      =         1;
 
     int order        =         2;
     bool quit        =         0;
@@ -112,7 +112,6 @@ int main()
     {
         if ( recalculate )
         {
-            SDL_RenderClear(renderer);
             
             //calculate iterations for the new mandlebrot
             const double y_inc = static_cast <double>( y_width ) / mandlebrot::pixelWidth;
@@ -142,9 +141,11 @@ int main()
                 t[ i ].join();
             }
             recalculate = 0;
+            redraw = 1;
         }
-        if( recolor )
+        if( redraw )
         {
+            SDL_RenderClear(renderer);
             if ( histogram_color )
             {
                 mandlebrot::histogram_render( current_colors, iterations, nIter, renderer );
@@ -195,13 +196,13 @@ int main()
                     //modulo coloring
                     case SDLK_m:
                         histogram_color = 0;
-                        recolor = 1;
+                        redraw = 1;
                         break;
 
                     //histogram coloring
                     case SDLK_h:
                         histogram_color = 1;
-                        recolor = 1;
+                        redraw = 1;
                         break;
 
                     //change color profile
@@ -210,7 +211,7 @@ int main()
                         {
                             current_colors = mandlebrot::color_maps[ 1 - 1 ];
                         }
-                        recolor = 1;
+                        redraw = 1;
                         break;
                     
                     case SDLK_2:
@@ -218,7 +219,7 @@ int main()
                         {
                             current_colors = mandlebrot::color_maps[ 2 - 1 ];
                         }
-                        recolor = 1;
+                        redraw = 1;
                         break;
                     
                     case SDLK_3:
@@ -226,7 +227,7 @@ int main()
                         {
                             current_colors = mandlebrot::color_maps[ 3 - 1 ];
                         }
-                        recolor = 1;
+                        redraw = 1;
                         break;
                     
                     case SDLK_4:
@@ -234,7 +235,7 @@ int main()
                         {
                             current_colors = mandlebrot::color_maps[ 4 - 1 ];
                         }
-                        recolor = 1;
+                        redraw = 1;
                         break;
 
                     //zoom in
@@ -312,7 +313,6 @@ int main()
                     default:
                         break;
                 }
-                recolor |= recalculate;
             }
         }
     }
