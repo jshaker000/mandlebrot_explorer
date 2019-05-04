@@ -71,6 +71,7 @@ After customizing, you must re-run make and make install, but it should be fairl
 5)  Add GUI elements to ajust the colormap
 6)  Add a second window as a "HUD" to show where you are on the fractal
 7)  Investigate bug where at high zoom levels thread panes get out of sync
+8)  Take advantage that panning reuses many existing pixels to not recalculate everything
 
 ## Examples Images
 
