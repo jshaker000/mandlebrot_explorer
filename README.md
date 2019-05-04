@@ -60,13 +60,17 @@ It should be fairly self explanatory.
 After customizing, you must re-run make and make install, but it should be fairly quick because only a few cosntants were changed.
 
 ##  TODO:
-1)  Allow easier customazation than changing source code
-2)  Have a better interface to scroll multiple steps at once, 
-    perhaps click and drag and/or boxes to type in Xmin/Xmax Ymin/Tmax
-3)  More intillegently setup a color gradient. Now histogram is easy to looks good at some zoom levels but garbage at others
-    More intellegent "bucket" placing for histogram
-4)  More intellegently split work between threads, rather than having each take a stripe.
+
+1)  Add seperate controls for fine and coarse zoom/pan
+2)  More intellegently setup a color gradient for historgram. Now histogram looks great at some zoom 
+    levels but garbage at others. Also more intellegent "bucket" placing for histogram
+3)  More intellegently split work between threads, rather than having each take a stripe.
     Maybe guess where the most work would need to be done?
+4)  Have a better interface to scroll multiple steps at once, 
+    perhaps click and drag and/or boxes to type in Xmin/Xmax Ymin/Ymax
+5)  Add GUI elements to ajust the colormap
+6)  Add a second window as a "HUD" to show where you are on the fractal
+7)  Investigate bug where at high zoom levels thread panes get out of sync
 
 ## Examples Images
 
