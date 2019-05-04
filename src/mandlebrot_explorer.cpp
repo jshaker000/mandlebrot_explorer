@@ -217,12 +217,11 @@ int main()
                                   << "hjkl      : Fine Pan\n"
                                   << "+ / -     : Coarse Zoom\n"
                                   << "y / u     : Fine Zoom\n"
-                                  << "[ / ]     : increase/decrease number of iterations. "
+                                  << "[ / ]     : increase/decrease number of iterations.\n"
                                   << "            low iterations are easier to render but lack sharpness\n"
                                   << "m/n       : modulo/histogram coloring\n"
                                   << "i/o       : toggle the amount of modulo blending\n"
                                   << "Nums 1-4  : toggle between precoded color maps in src/config.cpp\n"
-                                  << "            render faster, but miss detail\n"
                                   << "p         : print current state\n"
                                   << "q         : quit\n"
                                   << "t         : pull up this menu" << std::endl;
