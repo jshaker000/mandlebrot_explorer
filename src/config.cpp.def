@@ -1,0 +1,40 @@
+#include "config.h"
+
+const double mandlebrot::ZOOM_FACTOR   = 1.1;
+const double mandlebrot::SCROLL_FACTOR = 1.1;
+
+//pixlWidth must be divisible by num threads
+const int mandlebrot::pixelWidth  = 750;
+const int mandlebrot::NUM_THREADS =   5;
+
+const int    mandlebrot::nIter_def =  375;
+const double mandlebrot::x_min_def = -2.5;
+const double mandlebrot::x_max_def =  2.5;
+const double mandlebrot::y_min_def = -2.5;
+const double mandlebrot::y_max_def =  2.5; 
+
+//a big bailout radius makes calculations slower but improves the 
+//color smoothening algorithm
+const int    mandlebrot::BAILOUT_RADIUS = 2 << 10;
+
+//Color palette in RGB
+//Top row is min iterations to escape
+//Bottom row is max iterations to escape
+//will either be rendered with a histogram or modulo depening on view
+//each row is an RGB triple
+
+const int    mandlebrot::RED           = 0;
+const int    mandlebrot::GREEN         = 1;
+const int    mandlebrot::BLUE          = 2;
+
+const std::vector< std::vector< unsigned char > > mandlebrot::colors = 
+{
+    { 0x30, 0xFC, 0x9E },
+    { 0x20, 0xDF, 0xCC },
+    { 0x3A, 0x91, 0xE8 },
+    { 0xD4, 0x26, 0xE8 },
+    { 0xE4, 0x36, 0x48 },
+    { 0xFF, 0x5E, 0x00 },
+    { 0xF5, 0xEF, 0x47 },
+    { 0xE0, 0xE0, 0xE0 },
+};
