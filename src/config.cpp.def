@@ -1,12 +1,31 @@
 #include "config.h"
+#include <vector>
 
-const double mandlebrot::ZOOM_FACTOR   = 1.1;
-const double mandlebrot::SCROLL_FACTOR = 1.1;
+//order of the fractal, 2 is standard but others are possible
+const int mandlebrot::order_def    = 2;
 
-//pixlWidth must be divisible by num threads
+const double mandlebrot::COARSE_ZOOM_FACTOR   = 1.20;
+const double mandlebrot::FINE_ZOOM_FACTOR     = 1.05;
+
+const double mandlebrot::COARSE_SCROLL_FACTOR = 1.20;
+const double mandlebrot::FINE_SCROLL_FACTOR   = 1.05;
+
+//choose which colorscheme from color_maps you start with, counting from 0 on
+const double mandlebrot::colorscheme_def      = 0;
+
+//0 to default to modulo, 1 to default to histogram
+const bool   mandlebrot::histogram_color_def  = 0;
+
+//amount of blending to do in modulo view by default
+//1 is none, up to more
+const int mandlebrot::modulo_blending_def     = 2;
+
+//Square side length of the image
 const int mandlebrot::pixelWidth  = 750;
+//pixlWidth must be divisible by num threads
 const int mandlebrot::NUM_THREADS =   5;
 
+//default iterations to do, and also the dimensions of the default view
 const int    mandlebrot::nIter_def =  375;
 const double mandlebrot::x_min_def = -2.5;
 const double mandlebrot::x_max_def =  2.5;
@@ -22,7 +41,7 @@ const int    mandlebrot::BAILOUT_RADIUS = 2 << 16;
 //Bottom row is max iterations to escape
 //will either be rendered with a histogram or modulo depening on view
 //each row is an RGB triple
-
+//RED, GREEN, BLUE correspond to the indicies of RGB
 const int    mandlebrot::RED           = 0;
 const int    mandlebrot::GREEN         = 1;
 const int    mandlebrot::BLUE          = 2;
