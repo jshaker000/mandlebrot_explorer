@@ -11,6 +11,8 @@
 #include "config.h"
 #include "rendering.h"
 
+static const std::string program_name = "Mandlebrot Explorer - by Joseph Shaker";
+
 //Take in as conditions what part of the fractal to calculate, 
 //then dump it into its alotted segment of &iterations
 void calculate_iterations( int i_start, int i_end, int j_start, int j_end, int pixelWidth, int order, int nIter,
@@ -109,11 +111,11 @@ int main()
     SDL_Renderer *renderer;
     SDL_Event    e;
     
-    SDL_CreateWindowAndRenderer( mandlebrot::pixelWidth, 
-                                 mandlebrot::pixelWidth, 
+    SDL_CreateWindowAndRenderer( mandlebrot::pixelWidth,
+                                 mandlebrot::pixelWidth,
                                  SDL_WINDOW_OPENGL,
                                  &window, 
-                                 &renderer   );
+                                 &renderer );
 
     if (window == nullptr || renderer == nullptr)
     {
@@ -122,12 +124,15 @@ int main()
         return 1;
     }
 
+    SDL_SetWindowTitle( window, program_name.c_str());
+
     SDL_SetWindowPosition(window, 10, 10);
     
     while ( !quit )
     {
         if ( recalculate )
         {
+
             //calculate iterations for the new mandlebrot
             const double y_inc = static_cast <double>( y_width ) / mandlebrot::pixelWidth;
             const double x_inc = static_cast <double>( x_width ) / mandlebrot::pixelWidth;
@@ -145,6 +150,9 @@ int main()
                                           y_max - i*y_width / mandlebrot::NUM_THREADS, x_inc, 
                                           y_inc, x_width, std::ref( iterations ) ) );
             }
+            
+            SDL_SetWindowTitle( window, ( std::string("~ ") + program_name + std::string( ",   calculating ~") ).c_str() );
+            SDL_PumpEvents();
 
             // synchronize threads:
             for ( int i = 0; i < mandlebrot::NUM_THREADS; i++ )
@@ -157,6 +165,10 @@ int main()
         if( redraw )
         {
             SDL_RenderClear(renderer);
+            
+            SDL_SetWindowTitle( window, ( std::string("~ ") + program_name + std::string( ",    rendering   ~") ).c_str() );
+            SDL_PumpEvents();
+            
             if ( histogram_color )
             {
                 mandlebrot::histogram_render( current_colors, iterations, nIter, renderer );
@@ -170,8 +182,12 @@ int main()
             SDL_RenderPresent(renderer);
             redraw = 0;
         }
+        
 
         std::this_thread::sleep_for(std::chrono::milliseconds( 50 ) );
+        
+        SDL_SetWindowTitle( window, ( std::string("~ ") + program_name + std::string( ",    idle        ~") ).c_str() );
+        SDL_PumpEvents();
 
         while (SDL_PollEvent(&e))
         {
