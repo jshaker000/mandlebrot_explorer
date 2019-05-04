@@ -109,8 +109,12 @@ int main()
     SDL_Renderer *renderer;
     SDL_Event    e;
     
-    SDL_CreateWindowAndRenderer(mandlebrot::pixelWidth, mandlebrot::pixelWidth, 
-                                SDL_WINDOW_OPENGL | SDL_WINDOW_BORDERLESS, &window, &renderer);
+    SDL_CreateWindowAndRenderer( mandlebrot::pixelWidth, 
+                                 mandlebrot::pixelWidth, 
+                                 SDL_WINDOW_OPENGL,
+                                 &window, 
+                                 &renderer   );
+
     if (window == nullptr || renderer == nullptr)
     {
         std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
