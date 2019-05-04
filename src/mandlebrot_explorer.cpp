@@ -195,14 +195,20 @@ int main()
 
                     //modulo coloring
                     case SDLK_m:
-                        histogram_color = 0;
-                        redraw = 1;
+                        if ( histogram_color )
+                        {
+                            histogram_color = 0;
+                            redraw = 1;
+                        }
                         break;
 
                     //histogram coloring
                     case SDLK_h:
-                        histogram_color = 1;
-                        redraw = 1;
+                        if ( !histogram_color )
+                        {
+                            histogram_color = 1;
+                            redraw = 1;
+                        }
                         break;
 
                     //change color profile
@@ -210,32 +216,32 @@ int main()
                         if( mandlebrot::color_maps.size() >= 1 )
                         {
                             current_colors = mandlebrot::color_maps[ 1 - 1 ];
+                            redraw = 1;
                         }
-                        redraw = 1;
                         break;
                     
                     case SDLK_2:
                         if( mandlebrot::color_maps.size() >= 2 )
                         {
                             current_colors = mandlebrot::color_maps[ 2 - 1 ];
+                            redraw = 1;
                         }
-                        redraw = 1;
                         break;
                     
                     case SDLK_3:
                         if( mandlebrot::color_maps.size() >= 3 )
                         {
                             current_colors = mandlebrot::color_maps[ 3 - 1 ];
+                            redraw = 1;
                         }
-                        redraw = 1;
                         break;
                     
                     case SDLK_4:
                         if( mandlebrot::color_maps.size() >= 4 )
                         {
                             current_colors = mandlebrot::color_maps[ 4 - 1 ];
+                            redraw = 1;
                         }
-                        redraw = 1;
                         break;
 
                     //zoom in
