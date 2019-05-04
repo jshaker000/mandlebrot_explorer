@@ -70,24 +70,31 @@ to be more consistently nice. Here are some comparisons:
 
 
 Modulo:
+
 ![Modulo 1]( /screenshots/modulo1.png?raw=true) 
 
 Histogram:
+
 ![Histogram 1]( /screenshots/histogram1.png?raw=true) 
 
 Modulo:
+
 ![Modulo 2](/screenshots/modulo2.png?raw=true)
 
-Histogram
+Histogram:
+
 ![Histogram 2](/screenshots/histogram2.png?raw=true)
 
 Here are some extras (all with histogram):
 
-Spiral
+Spiral:
+
 ![Spiral 1]( /screenshots/spiral1.png?raw=true) 
 
-Minibrot
+Minibrot:
+
 ![Minibrot 1]( /screenshots/minibrot1.png?raw=true) 
 
-Minibrot
+Minibrot:
+
 ![Minibrot 2](/screenshots/minibrot2.png?raw=true)
