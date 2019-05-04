@@ -65,9 +65,13 @@ After customizing, you must re-run make and make install, but it should be fairl
 
 ## Examples Images
 
-Depending on what you are looking for, both the Historgram and Modulo renderings can look nice. However, the Histogram rendering tends
-to be more consistently nice. Here are some comparisons:
+Depending on what you are looking for, both the Historgram and Modulo renderings can look nice.
 
+However, the Modulo rendering tends to be more consistently nice.
+
+The Histogram renderings are a bit finicky in my experience.
+
+Here are some comparisons:
 
 Modulo:
 
