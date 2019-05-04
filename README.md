@@ -35,6 +35,9 @@ H toggles to 'histogram view'
 
 M toggles to 'modulo view'
 
+Numbers 1 - 4 allow you to toggle between preloaded color maps from *src/config.cpp* (from this repo
+1 and 2 are loaded with data, 3 and 4 are not).
+
 R to reset your view and scale back to the main fractal
 
 Currently Histogram view looks inconsistent. In some view it looks great and in others it looks iffy. 
