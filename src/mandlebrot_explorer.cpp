@@ -341,8 +341,8 @@ int main()
                     //less
                     case SDLK_o:
                         modulo_blending /= mandlebrot::modulo_blending_scroll;
-                        if ( modulo_blending < 1 )
-                            modulo_blending = 1;
+                        if ( modulo_blending < mandlebrot::modulo_blending_min )
+                            modulo_blending = mandlebrot::modulo_blending_min;
                         redraw = 1;
                         break;
 
