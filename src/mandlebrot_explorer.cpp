@@ -69,6 +69,7 @@ void calculate_iterations( int i_start, int i_end, int j_start, int j_end, int p
 
 int main()
 {
+
     bool recalculate = 1;
     bool redraw      = 1;
     bool quit        = 0;
@@ -196,6 +197,26 @@ int main()
             {
                 quit = true;
             }
+           
+            if( e.type == SDL_MOUSEBUTTONDOWN )
+            {
+                //recenter window over mouse
+                if ( e.button.button == SDL_BUTTON_LEFT )
+                {
+                    x_min += x_width * ( static_cast<double>( e.button.x )/ mandlebrot::pixelWidth - 1.0 / 2.0 );
+                    x_max += x_width * ( static_cast<double>( e.button.x )/ mandlebrot::pixelWidth - 1.0 / 2.0 );
+
+                    y_min -= y_width * ( static_cast<double>( e.button.y )/ mandlebrot::pixelWidth - 1.0 / 2.0 );
+                    y_max -= y_width * ( static_cast<double>( e.button.y )/ mandlebrot::pixelWidth - 1.0 / 2.0 );
+                    
+                    x_width  = x_max - x_min;
+                    y_width  = y_max - y_min;
+
+                    recalculate = 1;
+
+                }
+            }
+
             //If user presses any key
             if (e.type == SDL_KEYDOWN)
             {
@@ -205,7 +226,7 @@ int main()
                     case SDLK_q:
                         quit = true;;
                         break;
-                    
+
                     //print current state
                     case SDLK_p:
                         std::cout.precision( 20 );
@@ -238,7 +259,7 @@ int main()
                     case SDLK_t:
                         std::cout << "----------------------------------------------------------------------\n"
                                   << "Controls:\n"
-                                  << "r         : reset to default view\n"
+                                  << "Left Click: recenter the view on the mouse location\n"
                                   << "Arrow Keys: Coarse Pan\n"
                                   << "hjkl      : Fine Pan\n"
                                   << "+ / -     : Coarse Zoom\n"
@@ -248,6 +269,7 @@ int main()
                                   << "m/n       : modulo/histogram coloring\n"
                                   << "i/o       : toggle the amount of modulo blending\n"
                                   << "Nums 1-4  : toggle between precoded color maps in src/config.cpp\n"
+                                  << "r         : reset to default view\n"
                                   << "p         : print current state\n"
                                   << "q         : quit\n"
                                   << "t         : pull up this menu" << std::endl;

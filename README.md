@@ -22,9 +22,11 @@ To uninstall the program, run:
 
 Run the program, you can then use the:
 
-*arrow keys* to fine pan 
+*Left Click* to recenter the fractal on the mouse
 
-*hjkl*       to coarse pan
+*arrow keys* to coarse pan 
+
+*hjkl*       to fine pan
 
 *+* / *-*    to coarse zoom
 
