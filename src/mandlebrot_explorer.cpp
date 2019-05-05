@@ -264,6 +264,8 @@ int main()
                         x_width  = x_max - x_min;
                         y_width  = y_max - y_min;
                         nIter    = mandlebrot::nIter_def;
+                        modulo_blending = mandlebrot::modulo_blending_def;
+
                         recalculate = 1;
                         break;
 
