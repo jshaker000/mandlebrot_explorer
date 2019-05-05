@@ -73,7 +73,7 @@ int main()
     bool redraw      = 1;
     bool quit        = 0;
 
-    int modulo_blending = mandlebrot::modulo_blending_def;
+    double modulo_blending = mandlebrot::modulo_blending_def;
     if ( modulo_blending < 1 )
     {
         modulo_blending = 1;
@@ -335,13 +335,14 @@ int main()
                     //change amount of modulo blending
                     //more
                     case SDLK_i:
-                        modulo_blending++;
+                        modulo_blending *= mandlebrot::modulo_blending_scroll;
                         redraw = 1;
                         break;
                     //less
                     case SDLK_o:
-                        if ( modulo_blending > 1 )
-                            modulo_blending--;
+                        modulo_blending /= mandlebrot::modulo_blending_scroll;
+                        if ( modulo_blending < 1 )
+                            modulo_blending = 1;
                         redraw = 1;
                         break;
 

@@ -18,7 +18,9 @@ const bool   mandlebrot::histogram_color_def  = 0;
 
 //amount of blending to do in modulo view by default
 //1 is none, up to more
-const int mandlebrot::modulo_blending_def     = 2;
+//the scroll encodes by what factor it will go up / down when you use the manual commands
+const double mandlebrot::modulo_blending_def    = 2.25;
+const double mandlebrot::modulo_blending_scroll = 1.05;
 
 //Square side length of the image
 const int mandlebrot::pixelWidth  = 750;

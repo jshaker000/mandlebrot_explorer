@@ -10,7 +10,8 @@
 //this way, in theory each 1/NUM_BUCKETS group will have a similar color
 //In theory, each Bucket should then have TOTAL_PIXELS/NUM_BUCKETS in it
 void mandlebrot::histogram_render ( const std::vector< std::vector <unsigned char> > &current_colors,
-                                    const std::vector<double> &iterations, int nIter, SDL_Renderer *renderer )
+                                    const std::vector<double> &iterations, int nIter, 
+                                    SDL_Renderer *renderer )
 {
 
     std::vector<double> temp(iterations);
@@ -87,8 +88,7 @@ void mandlebrot::histogram_render ( const std::vector< std::vector <unsigned cha
 //color each pixel by the modulo of the iterations it took
 //this has the advantage of being zoom invariant, but can get messy
 void mandlebrot::modulo_render ( const std::vector< std::vector <unsigned char> > &current_colors,
-                                 const std::vector<double> &iterations, int nIter,
-                                 int modulo_blend, 
+                                 const std::vector<double> &iterations, int nIter, double modulo_blend, 
                                  SDL_Renderer *renderer )
 {
     for ( int i = 0; i < mandlebrot::pixelWidth; i++ )
@@ -111,7 +111,7 @@ void mandlebrot::modulo_render ( const std::vector< std::vector <unsigned char> 
                 int bucket2_index = ( bucket_index + 1 ) % current_colors.size();
 
                 double tmp = iterations[ i * mandlebrot::pixelWidth + j ];
-                int tmp2;
+                double tmp2;
 
                 for ( tmp2 = 0; tmp2 < tmp - modulo_blend; tmp2 += modulo_blend )
                 {
