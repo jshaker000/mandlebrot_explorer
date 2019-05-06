@@ -4,7 +4,7 @@ IDIR          := ${CURDIR}/../include
 ODIR          := ${CURDIR}/../obj
 INSTALLDIR    := /usr/local/bin
 CXX           := g++
-CXXFLAGS      := -std=c++11 -O2 -I/usr/local/include -I$(IDIR)
+CXXFLAGS      := -std=c++11 -O2 -I$(IDIR)
 LDFLAGS       := -lSDL2 -lpthread
 
 
@@ -38,7 +38,7 @@ clean:
 	rm -f $(ODIR)/*.o
 
 $(SRCDIR)/$(CONFIGS_CPP): % : %.def
-	@if [ -f $(SRCDIR)/config.cpp ]; \
+	@if [ -f $(SRCDIR)/$@ ]; \
 	then \
 		printf 'Overwrite $@ with $<?\n'; \
 		read -n 1 -p '>' userinput; \
