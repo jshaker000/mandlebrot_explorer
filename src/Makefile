@@ -38,7 +38,7 @@ clean:
 	rm -f $(ODIR)/*.o
 
 $(SRCDIR)/$(CONFIGS_CPP): % : %.def
-	@if [ -f $(SRCDIR)/$@ ]; \
+	@if [ -f $@ ]; \
 	then \
 		printf 'Overwrite $@ with $<?\n'; \
 		read -n 1 -p '>' userinput; \
