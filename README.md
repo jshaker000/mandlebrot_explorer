@@ -4,11 +4,16 @@
 The purpose of this program is to be an easy to use fractal explorer and a demo of interactivity using the SDL2 library.
 
 ## Dependancies:
-To install this program, one must have *SDL2* (available from their website or most package managers) and must have lpthreads (default on most POSIX systems)
+To install this program, one must have *SDL2* (available from their website or most package managers) and must have lpthreads (available on most POSIX systems)
 
 ## Compile & Install:
+
+### ON POSIX SYSTEMS
+
+Tested on MacOS with XCode and on multiple Linux Distros
+
 Clone the repository and run **make && make install** from the *src/* directory. 
-This will compile the program and copy it to your **$PATH**, and install the man page.
+This will compile the program and copy it to your **$PATH**.
 Depending on your system, *make install* may require administrative privileges.
 
 
@@ -17,6 +22,17 @@ Depending on your system, *make install* may require administrative privileges.
 To uninstall the program, run:
 
     $ make clean && make uninstall
+
+
+### On Windows
+
+I assume that the code would install on Cygwin / Mingw if you get the appropriate header file. You could also install in the WSL, and host an XServer on Windows.
+
+SDL offers Windows headers so I assume on could import all the headers and files into a Visual Studio to compile.
+
+Finally you could make a VM.
+
+If anyone has tried any of these with success, please let me know.
 
 ## Usage:
 
@@ -71,17 +87,16 @@ After customizing, you must re-run make and make install, but it should be fairl
 
 ##  TODO:
 
-1)  Add seperate controls for fine and coarse zoom/pan
-2)  More intellegently setup a color gradient for historgram. Now histogram looks great at some zoom 
+1)  More intellegently setup a color gradient for historgram. Now histogram looks great at some zoom 
     levels but garbage at others. Also more intellegent "bucket" placing for histogram
-3)  More intellegently split work between threads, rather than having each take a stripe.
+2)  More intellegently split work between threads, rather than having each take a stripe.
     Maybe guess where the most work would need to be done?
-4)  Have a better interface to scroll multiple steps at once, 
+3)  Have a better interface to scroll multiple steps at once, 
     perhaps click and drag and/or boxes to type in Xmin/Xmax Ymin/Ymax
-5)  Add GUI elements to ajust the colormap
-6)  Add a second window as a "HUD" to show where you are on the fractal
-7)  Investigate bug where at high zoom levels thread panes get out of sync
-8)  Take advantage that panning reuses many existing pixels to not recalculate everything
+4)  Add GUI elements to ajust the colormap
+5)  Add a second window as a "HUD" to show where you are on the fractal
+6)  Investigate bug where at high zoom levels thread panes get out of sync
+7)  Take advantage that panning reuses many existing pixels to not recalculate everything
 
 ## Examples Images
 
@@ -112,3 +127,7 @@ Modulo:
 Histogram:
 
 ![Histogram 1]( /screenshots/histogram1.png?raw=true) 
+
+## Easter Eggs
+
+It turns out that in modulo mode, holding *i* or *o*, changing the blending of the modulo can make for very neat looking animations that are fun to play with. I might spend more effort making this an animation recording software, I'm not sure.
