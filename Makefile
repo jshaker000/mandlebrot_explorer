@@ -3,7 +3,7 @@
 
 MAIN := ./src/./mandlebrot_explorer
 
-.PHONY: default clean
+.PHONY: default clean install uninstall
 
 default:
 	make -C src/ all
@@ -11,3 +11,9 @@ default:
 
 clean:
 	make -C src/ clean
+	
+install:
+	make -C src/ install
+
+uninstall:
+	make -C src/ uninstall
