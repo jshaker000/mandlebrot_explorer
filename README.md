@@ -23,6 +23,10 @@ To uninstall the program, run:
 
     $ make clean && make uninstall
 
+You can then run the program by running the generated executable *./mandlebrot_explorer*
+
+Alternatively, you should be able to simply run the top level *Makefile*, which should recurse down into src, run make, then
+run the program. You should also be able to *clean* and *uninstall* and *install*, all from the top level makefile.
 
 ### On Windows
 
