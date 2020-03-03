@@ -89,7 +89,7 @@ It should be fairly self explanatory.
 
 After customizing, you must re-run make and make install, but it should be fairly quick because only a few cosntants were changed.
 
-##  TODO:
+##  TODO / BUGS:
 
 1)  More intellegently setup a color gradient for historgram. Now histogram looks great at some zoom 
     levels but garbage at others. Also more intellegent "bucket" placing for histogram
@@ -101,6 +101,7 @@ After customizing, you must re-run make and make install, but it should be fairl
 5)  Add a second window as a "HUD" to show where you are on the fractal
 6)  Investigate bug where at high zoom levels thread panes get out of sync
 7)  Take advantage that panning reuses many existing pixels to not recalculate everything
+8)  Since a recent SDL patch, seems to now run over 100x slower on MacOS (seems fine on linux though), may need to use a different API call.
 
 ## Examples Images
 
