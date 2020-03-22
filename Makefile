@@ -1,21 +1,16 @@
 # top level makefile that can recurse into src to build and run the software, or clean
 # In this way, you can simple run top level "make" to make the program
 
-MAIN := ./src/./mandlebrot_explorer
+SRC_DIR := ./src/
+MAIN    := ${SRC_DIR}/./mandlebrot_explorer
 
-.PHONY: default clean install uninstall
+RECURSE_CMDS := all clean install uninstall
+
+.PHONY: run ${RECURSE_CMDS}
 
 run: all
 	${MAIN}
 
-all:
-	make -C src/ all
 
-clean:
-	make -C src/ clean
-
-install:
-	make -C src/ install
-
-uninstall:
-	make -C src/ uninstall
+${RECURSE_CMDS}: % :
+	make -C ${SRC_DIR} $@
