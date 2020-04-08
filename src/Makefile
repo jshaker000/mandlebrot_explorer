@@ -8,36 +8,36 @@ CXXFLAGS      := -std=c++17 -O3 -flto -Wall -Werror -I$(IDIR)
 LDFLAGS       := -lSDL2 -lpthread
 
 
-TARGETS     := mandlebrot_explorer
+TARGETS := mandlebrot_explorer
 
 _DEPS   := config.h rendering.h
-DEPS    := $(patsubst %,$(IDIR)/%,$(_DEPS))
+DEPS    := $(patsubst %,${IDIR}/%,${_DEPS})
 
-_MAINS  := $(addsuffix .o, $(TARGETS) )
-MAINS   := $(patsubst %,$(ODIR)/%,$(_MAINS))
+_MAINS  := $(addsuffix .o, ${TARGETS} )
+MAINS   := $(patsubst %,${ODIR}/%,${_MAINS})
 
-_OBJ    := config.o rendering.o $(_MAINS)
-OBJ     := $(patsubst %,$(ODIR)/%,$(_OBJ))
+_OBJ    := config.o rendering.o ${_MAINS}
+OBJ     := $(patsubst %,${ODIR}/%,${_OBJ})
 
 CONFIGS_CPP := config.cpp
 
 .PHONY: all install uninstall remove clean
 
-all: $(TARGETS)
+all: ${TARGETS}
 
 install: all
-	for i in $(TARGETS); do cp -f $$i $(INSTALLDIR)/$$i; done
+	for i in ${TARGETS}; do cp -f $$i ${INSTALLDIR}/$$i; done
 
 uninstall:
-	for i in $(TARGETS); do rm -f $(INSTALLDIR)/$$i; done
+	for i in ${TARGETS}; do rm -f ${INSTALLDIR}/$$i; done
 
 remove:
-	rm -f $(TARGETS)
+	rm -f ${TARGETS}
 
 clean:
-	rm -f $(ODIR)/*.o
+	rm -f ${ODIR}/*.o
 
-$(SRCDIR)/$(CONFIGS_CPP): % : %.def
+${SRCDIR}/${CONFIGS_CPP}: % : %.def
 	@if [ -f $@ ]; \
 	then \
 		printf 'Overwrite $@ with $<?\n'; \
@@ -51,8 +51,8 @@ $(SRCDIR)/$(CONFIGS_CPP): % : %.def
 		cp -f $< $@; \
 	fi;
 
-$(OBJ): $(ODIR)/%.o : $(SRCDIR)/%.cpp $(DEPS)
-	$(CXX) -c -o $@ $< $(CXXFLAGS)
+${OBJ}: ${ODIR}/%.o : ${SRCDIR}/%.cpp ${DEPS}
+	${CXX} -c -o $@ $< ${CXXFLAGS}
 
-$(TARGETS): % : $(filter-out $(MAINS), $(OBJ)) $(ODIR)/%.o
-	$(CXX) -o $@ $^ $(CXXFLAGS) $(LDFLAGS)
+${TARGETS}: % : $(filter-out ${MAINS}, ${OBJ}) ${ODIR}/%.o
+	${CXX} -o $@ $^ ${CXXFLAGS} ${LDFLAGS}
