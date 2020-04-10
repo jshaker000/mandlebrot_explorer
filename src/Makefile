@@ -4,7 +4,7 @@ IDIR          := ${CURDIR}/../include
 ODIR          := ${CURDIR}/../obj
 INSTALLDIR    := /usr/local/bin
 CXX           := g++
-CXXFLAGS      := -std=c++17 -O3 -flto -Wall -Werror -I$(IDIR)
+CXXFLAGS      := -std=c++17 -O3 -flto -Wall -Werror -Wextra -I$(IDIR)
 LDFLAGS       := -lSDL2 -lpthread
 
 

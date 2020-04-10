@@ -83,7 +83,7 @@ int main()
     bool histogram_color = mandlebrot::histogram_color_def;
 
     int order        = mandlebrot::order_def;
-    int nIter        = mandlebrot::nIter_def;
+    size_t nIter     = static_cast<size_t>(mandlebrot::nIter_def);
 
     double x_min   =  mandlebrot::x_min_def;
     double x_max   =  mandlebrot::x_max_def;
@@ -95,7 +95,7 @@ int main()
     std::vector<double> iterations( mandlebrot::pixelWidth * mandlebrot::pixelWidth );
     std::vector< std::vector <unsigned char> > current_colors;
     {
-        int current_map = mandlebrot::colorscheme_def;
+        size_t current_map = static_cast<size_t>(mandlebrot::colorscheme_def);
         if ( current_map < 0 || current_map >= mandlebrot::color_maps.size() )
         {
             current_map = 0;
@@ -239,7 +239,7 @@ int main()
                                   << "{\n"
                                   << std::hex << std::setfill ('0');
 
-                        for ( int i = 0; i < current_colors.size(); i++ )
+                        for ( size_t i = 0; i < current_colors.size(); i++ )
                         {
                             std::cout << "    "
                                       << "{ 0x" << std::setw( 2 ) << static_cast<int>( current_colors[ i ][ 0 ] )
