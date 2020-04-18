@@ -65,9 +65,7 @@ void mandlebrot::histogram_render ( const std::vector< std::vector <unsigned cha
                         break;
                 }
 
-                bucket2_index = bucket_index - 1;
-                if ( bucket2_index < 0 )
-                    bucket2_index = buckets.size() - 1;
+                bucket2_index = bucket_index == 0 ? buckets.size() -1 : bucket_index - 1;
 
                 double blend = static_cast<double>( iterations[ i * mandlebrot::pixelWidth + j ] - buckets[ bucket_index - 1 ] )
                         / static_cast<double>( buckets[ bucket_index ] - buckets[ bucket_index - 1 ] );
