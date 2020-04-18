@@ -96,7 +96,7 @@ int main()
     std::vector< std::vector <unsigned char> > current_colors;
     {
         size_t current_map = static_cast<size_t>(mandlebrot::colorscheme_def);
-        if ( current_map < 0 || current_map >= mandlebrot::color_maps.size() )
+        if (current_map >= mandlebrot::color_maps.size())
         {
             current_map = 0;
         }
