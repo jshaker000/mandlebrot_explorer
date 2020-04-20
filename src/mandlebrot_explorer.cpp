@@ -134,35 +134,30 @@ int main()
 
             // calculate iterations for the new mandlebrot
             // send off threads to calculate iterations for each slice of the fractal and then return back
-            std::vector<std::thread> t;
-            t.reserve(mandlebrot::NUM_THREADS);
+            std::vector<std::thread> th;
+            th.reserve(mandlebrot::NUM_THREADS);
             for (int i = 0; i < mandlebrot::NUM_THREADS; i++)
             {
-                t.push_back(std::thread(calculate_iterations,
-                                        i * mandlebrot::pixelWidth / mandlebrot::NUM_THREADS,       // i start
-                                        (i + 1) * mandlebrot::pixelWidth / mandlebrot::NUM_THREADS, // i end
-                                        0, // j start
-                                        mandlebrot::pixelWidth, // j end
-                                        mandlebrot::pixelWidth, // num_pixels
-                                        order, // order
-                                        nIter, //iter
-                                        x_min, // xmin
-                                        y_max - (i*y_width)/mandlebrot::NUM_THREADS, // y max
-                                        x_inc, // x increment
-                                        y_inc, // y increment
-                                        std::ref(iterations)) // iterations vector
+                th.push_back(std::thread(calculate_iterations,
+                                         i * mandlebrot::pixelWidth / mandlebrot::NUM_THREADS,       // i start
+                                         (i + 1) * mandlebrot::pixelWidth / mandlebrot::NUM_THREADS, // i end
+                                         0, // j start
+                                         mandlebrot::pixelWidth, // j end
+                                         mandlebrot::pixelWidth, // num_pixels
+                                         order, // order
+                                         nIter, //iter
+                                         x_min, // xmin
+                                         y_max - (i*y_width)/mandlebrot::NUM_THREADS, // y max
+                                         x_inc, // x increment
+                                         y_inc, // y increment
+                                         std::ref(iterations)) // iterations vector
                 );
             }
 
             SDL_SetWindowTitle(window, (std::string("~ ") + program_name + std::string( ",   calculating ~") ).c_str());
             SDL_PumpEvents();
 
-            std::for_each(t.begin(), t.end(),
-            [](auto &th)
-            { 
-                std::this_thread::sleep_for(std::chrono::milliseconds(1));
-                th.join();
-            });
+            std::for_each(th.begin(), th.end(), [](auto &t) { t.join(); });
 
             recalculate = false;
             redraw = true;
