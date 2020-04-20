@@ -42,7 +42,6 @@ void calculate_iterations(const int i_start,    const int i_end,
             std::complex<double> cp_iterate(currentPoint);
             while(k < nIter && abs(cp_iterate) < mandlebrot::BAILOUT_RADIUS)
             {
-                std::complex<double> iterate_buff(cp_iterate);
                 cp_iterate = std::pow(cp_iterate, order) + currentPoint;
                 k += 1;
             }
