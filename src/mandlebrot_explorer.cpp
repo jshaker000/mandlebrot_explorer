@@ -157,7 +157,12 @@ int main()
             SDL_SetWindowTitle(window, (std::string("~ ") + program_name + std::string( ",   calculating ~") ).c_str());
             SDL_PumpEvents();
 
-            std::for_each(t.begin(), t.end(), [](auto &th){ th.join(); });
+            std::for_each(t.begin(), t.end(),
+            [](auto &th)
+            { 
+                std::this_thread::sleep_for(std::chrono::milliseconds(1));
+                th.join();
+            });
 
             recalculate = false;
             redraw = true;
