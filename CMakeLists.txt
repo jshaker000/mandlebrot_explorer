@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project("Mandlebrot Explorer Root")
+project("Mandlebrot Explorer Root" CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)

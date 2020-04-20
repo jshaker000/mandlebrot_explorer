@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project("Mandlebrot Explorer Src")
+project("Mandlebrot Explorer Src" CXX)
 
 add_compile_options(-Wall -Werror -pedantic -Wextra -O3 -flto)
 
