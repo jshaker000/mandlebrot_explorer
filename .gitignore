@@ -1,11 +1,13 @@
 #   Config Files  #
 ###################
+
 src/config.cpp
 
 # Compiled source #
 ###################
 
 mandlebrot_explorer
+build/
 
 *.com
 *.class

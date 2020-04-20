@@ -1,4 +1,4 @@
-# mandlebrot_explorer
+# mandlebrot\_explorer
 
 ## Purpose:
 The purpose of this program is to be an easy to use fractal explorer and a demo of interactivity using the SDL2 library.
@@ -8,35 +8,11 @@ To install this program, one must have *SDL2* (available from their website or m
 
 ## Compile & Install:
 
-### ON POSIX SYSTEMS
+Tested on POSIX, but Visual Studio should be able to import the CMake File.
 
-Tested on MacOS with XCode and on multiple Linux Distros
+    mkdir build && cd build && cmake .. && make
 
-Clone the repository and run **make && make install** from the *src/* directory. 
-This will compile the program and copy it to your **$PATH**.
-Depending on your system, *make install* may require administrative privileges.
-
-
-    $ make && make install
-
-To uninstall the program, run:
-
-    $ make clean && make uninstall
-
-You can then run the program by running the generated executable *./mandlebrot_explorer*
-
-Alternatively, you should be able to simply run the top level *Makefile*, which should recurse down into src, run make, then
-run the program. You should also be able to *clean* and *uninstall* and *install*, all from the top level makefile.
-
-### On Windows
-
-I assume that the code would install on Cygwin / Mingw if you get the appropriate header file. You could also install in the WSL, and host an XServer on Windows.
-
-SDL offers Windows headers so I assume on could import all the headers and files into a Visual Studio to compile.
-
-Finally you could make a VM.
-
-If anyone has tried any of these with success, please let me know.
+You can then run the program by running the generated executable *build/mandlebrot\_explorer*
 
 ## Usage:
 
@@ -77,7 +53,9 @@ will be made to made interactions more graphical.
 
 ### Customization:
 
-To customize, copy *src/config.cpp.def* into *src/config.cpp* and make your edits there
+To customize, copy *src/config.cpp.def* into *src/config.cpp* and make your edits there, then rerun the above build
+commands.
+Note that running *make clean* will delete your custom *src/config.cpp* file
 
 *src/config.cpp* is in the .gitignore, so you can edit without worrying about syncing with the repo.
 
@@ -86,8 +64,6 @@ However, beware when you pull if there are changes that will cause your *src/con
 In the file, you can modify the color palette, num threads, pixelWidth, etc.
 
 It should be fairly self explanatory.
-
-After customizing, you must re-run make and make install, but it should be fairly quick because only a few cosntants were changed.
 
 ##  TODO / BUGS:
 
