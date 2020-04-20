@@ -12,8 +12,6 @@ set(LIBRARY_OUTPUT_PATH     ${CMAKE_BINARY_DIR})
 find_package(SDL2 REQUIRED)
 find_package(Threads REQUIRED)
 
-file(GLOB HEADER_FILES include/*.h)
-
 include_directories(${SDL2_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR}/include)
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/src)

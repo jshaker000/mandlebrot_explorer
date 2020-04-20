@@ -4,7 +4,6 @@ project("Mandlebrot Explorer Src")
 
 add_compile_options(-Wall -Werror -pedantic -Wextra -O3 -flto)
 
-
 if(NOT EXISTS ${CMAKE_SOURCE_DIR}/src/config.cpp)
     add_custom_command(
         OUTPUT  ${CMAKE_SOURCE_DIR}/src/config.cpp
@@ -13,10 +12,9 @@ if(NOT EXISTS ${CMAKE_SOURCE_DIR}/src/config.cpp)
     )
 endif()
 
-add_library(config    config.cpp     ${HEADER_FILES})
-add_library(rendering rendering.cpp  ${HEADER_FILES})
-
-add_executable(mandlebrot_explorer  mandlebrot_explorer.cpp  ${HEADER_FILES})
+add_library(config    config.cpp)
+add_library(rendering rendering.cpp)
+add_executable(mandlebrot_explorer  mandlebrot_explorer.cpp)
 
 if(THREADS_HAVE_PTHREAD_ARG)
     target_compile_options(mandlebrot_explorer PUBLIC "-pthread")
