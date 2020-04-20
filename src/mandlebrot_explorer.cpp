@@ -6,7 +6,7 @@
 #include <thread>
 #include <vector>
 
-#include <SDL2/SDL.h>
+#include "SDL.h"
 
 #include "config.h"
 #include "rendering.h"
