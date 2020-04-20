@@ -87,15 +87,15 @@ int main()
     double x_width =  x_max - x_min;
     double y_width =  y_max - y_min;
 
-    std::vector<double> iterations(mandlebrot::pixelWidth * mandlebrot::pixelWidth );
-    std::vector< std::vector <unsigned char> > current_colors;
+    std::vector<double> iterations(mandlebrot::pixelWidth * mandlebrot::pixelWidth);
+    std::vector<std::vector <unsigned char>> current_colors;
     {
         size_t current_map = static_cast<size_t>(mandlebrot::colorscheme_def);
         if (current_map >= mandlebrot::color_maps.size())
         {
             current_map = 0;
         }
-        current_colors = mandlebrot::color_maps[ current_map ];
+        current_colors = mandlebrot::color_maps[current_map];
     }
 
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
