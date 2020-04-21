@@ -25,8 +25,6 @@ const double mandlebrot::modulo_blending_min    = 5e-2;
 
 //Square side length of the image
 const int mandlebrot::pixelWidth  = 750;
-//pixlWidth must be divisible by num threads
-const int mandlebrot::NUM_THREADS =   5;
 
 //default iterations to do, and also the dimensions of the default view
 const int    mandlebrot::nIter_def =  375;
@@ -37,7 +35,7 @@ const double mandlebrot::y_max_def =  2.5;
 
 //a big bailout radius makes calculations slower but improves the 
 //color smoothening algorithm
-const int    mandlebrot::BAILOUT_RADIUS = 2 << 16;
+const int    mandlebrot::BAILOUT_RADIUS = 1 << 16;
 
 //Color palette in RGB
 //Top row is min iterations to escape

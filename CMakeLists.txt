@@ -10,7 +10,7 @@ set(EXECUTABLE_OUTPUT_PATH  ${CMAKE_BINARY_DIR})
 set(LIBRARY_OUTPUT_PATH     ${CMAKE_BINARY_DIR})
 
 find_package(SDL2 REQUIRED)
-find_package(Threads REQUIRED)
+find_package(OpenMP REQUIRED)
 
 include_directories(${SDL2_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR}/include)
 
