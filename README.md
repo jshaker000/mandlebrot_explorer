@@ -4,7 +4,8 @@
 The purpose of this program is to be an easy to use fractal explorer and a demo of interactivity using the SDL2 library.
 
 ## Dependancies:
-To install this program, one must have *SDL2* (available from their website or most package managers) and must have lpthreads (available on most POSIX systems)
+To install this program, one must have *SDL2* (available from their website or most package managers) and must have
+a compiler that supports *OpenMP*. Additionally, one needs *CMake* to run the build scripts.
 
 ## Compile & Install:
 
