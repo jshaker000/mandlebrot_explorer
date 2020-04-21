@@ -90,7 +90,7 @@ int main()
 
             // calculate iterations for the new mandlebrot
             // send off threads to calculate iterations for each slice of the fractal and then return back
-            #pragma omp parallel for
+            #pragma omp parallel for collapse(2) schedule(dynamic, 512)
             for(int i = 0; i < mandlebrot::pixelWidth; i++)
             {
                 for (int j = 0; j < mandlebrot::pixelWidth; j++)

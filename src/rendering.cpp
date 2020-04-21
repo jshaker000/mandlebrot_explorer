@@ -46,7 +46,7 @@ void mandlebrot::histogram_render (const std::vector< std::vector <unsigned char
         }
     }
 
-    #pragma omp parallel for
+    #pragma omp parallel for collapse(2)
     for (int i = 0; i < mandlebrot::pixelWidth; i++)
     {
         for (int j = 0; j < mandlebrot::pixelWidth; j++)
@@ -96,7 +96,7 @@ void mandlebrot::modulo_render (const std::vector< std::vector <unsigned char> >
                                  const std::vector<double> &iterations, int nIter, double modulo_blend,
                                  SDL_Renderer *renderer)
 {
-    #pragma omp parallel for
+    #pragma omp parallel for collapse(2)
     for (int i = 0; i < mandlebrot::pixelWidth; i++)
     {
         for (int j = 0; j < mandlebrot::pixelWidth; j++)
