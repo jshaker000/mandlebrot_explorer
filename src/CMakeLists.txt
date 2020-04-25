@@ -14,6 +14,7 @@ add_library(config    config.cpp)
 add_library(rendering rendering.cpp)
 add_executable(mandlebrot_explorer  mandlebrot_explorer.cpp)
 
+separate_arguments(OpenMP_CXX_FLAGS)
 target_compile_options(mandlebrot_explorer PRIVATE ${OpenMP_CXX_FLAGS})
 target_compile_options(rendering PRIVATE ${OpenMP_CXX_FLAGS})
 
