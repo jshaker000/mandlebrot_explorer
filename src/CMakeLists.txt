@@ -16,6 +16,7 @@ add_executable(mandlebrot_explorer  mandlebrot_explorer.cpp)
 
 separate_arguments(OpenMP_CXX_FLAGS)
 target_compile_options(mandlebrot_explorer PRIVATE ${OpenMP_CXX_FLAGS})
-target_compile_options(rendering PRIVATE ${OpenMP_CXX_FLAGS})
+target_compile_options(rendering           PRIVATE ${OpenMP_CXX_FLAGS})
 
-target_link_libraries(mandlebrot_explorer config rendering ${SDL2_LIBRARIES} ${OpenMP_CXX_LIBRARIES})
+target_link_libraries(rendering SDL2::SDL2)
+target_link_libraries(mandlebrot_explorer config rendering SDL2::SDL2 ${OpenMP_CXX_LIBRARIES})
