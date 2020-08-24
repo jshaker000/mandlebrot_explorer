@@ -14,6 +14,9 @@
 
 static const std::string program_name = "Mandlebrot Explorer";
 
+// TODO: Rerender somewhat regularly to avoid dragging a window over the screen
+// from causing issues
+
 int main()
 {
 

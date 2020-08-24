@@ -31,9 +31,9 @@ const int    mandlebrot::nIter_def =  375;
 const double mandlebrot::x_min_def = -2.5;
 const double mandlebrot::x_max_def =  2.5;
 const double mandlebrot::y_min_def = -2.5;
-const double mandlebrot::y_max_def =  2.5; 
+const double mandlebrot::y_max_def =  2.5;
 
-//a big bailout radius makes calculations slower but improves the 
+//a big bailout radius makes calculations slower but improves the
 //color smoothening algorithm
 const int    mandlebrot::BAILOUT_RADIUS = 1 << 16;
 
@@ -51,7 +51,7 @@ const int    mandlebrot::BLUE          = 2;
 //each map should have a set of RGB triples
 //The first value is the furthest from the set, wheras the last would be hugging the set
 //The set itself is fixed as black
-const std::vector< std::vector< std::vector < unsigned char> > > mandlebrot::color_maps = 
+const std::vector< std::vector< std::vector < unsigned char> > > mandlebrot::color_maps =
 {
     //Wikipedia's color scheme. Looks very nice with modulo but
     //pretty lame with histogram coloring
@@ -75,7 +75,7 @@ const std::vector< std::vector< std::vector < unsigned char> > > mandlebrot::col
     },
     //My custom coloring scheme. Could be better but its something
     //to start with
-    //pretty ggod with histogram but not great with modulo
+    //pretty good with histogram but not great with modulo
     {
         { 0x30, 0xFC, 0x9E }, //teal
         { 0x20, 0xDF, 0xCC }, //sky blue
