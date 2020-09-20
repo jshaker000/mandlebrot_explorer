@@ -13,6 +13,7 @@
 #include "rendering.h"
 
 static const std::string program_name = "Mandlebrot Explorer";
+static constexpr int MAX_LOOPS_WITHOUT_REFRESH = 5;
 
 // TODO: Rerender somewhat regularly to avoid dragging a window over the screen
 // from causing issues
@@ -23,6 +24,7 @@ int main()
     bool recalculate = true;
     bool redraw      = true;
     bool quit        = false;
+    int loops_without_refresh = 0;
 
     double modulo_blending = mandlebrot::modulo_blending_def;
     if (modulo_blending < 1)
@@ -88,7 +90,7 @@ int main()
             const double y_inc = static_cast <double>(y_width) / mandlebrot::pixelWidth;
             const double x_inc = static_cast <double>(x_width) / mandlebrot::pixelWidth;
 
-            SDL_SetWindowTitle(window, (std::string("~ ") + program_name + std::string( ",   calculating ~") ).c_str());
+            SDL_SetWindowTitle(window, (program_name + std::string( ": calculating")).c_str());
             SDL_PumpEvents();
 
             // calculate iterations for the new mandlebrot
@@ -129,11 +131,11 @@ int main()
             recalculate = false;
             redraw = true;
         }
-        if (redraw)
+        if (redraw || (loops_without_refresh == MAX_LOOPS_WITHOUT_REFRESH))
         {
             SDL_RenderClear(renderer);
 
-            SDL_SetWindowTitle(window, (std::string("~ ") + program_name + std::string( ",    rendering   ~")).c_str());
+            SDL_SetWindowTitle(window, program_name.c_str());
             SDL_PumpEvents();
 
             if (histogram_color)
@@ -146,16 +148,27 @@ int main()
                 mandlebrot::modulo_render(current_colors, iterations, nIter, modulo_blending, renderer);
             }
             SDL_RenderPresent(renderer);
+            loops_without_refresh = -1;
             redraw = false;
         }
+        loops_without_refresh += 1;
 
         std::this_thread::sleep_for(std::chrono::milliseconds(5));
 
-        SDL_SetWindowTitle(window, (program_name + std::string(",    idle        ~")).c_str());
+        SDL_SetWindowTitle(window, program_name.c_str());
         SDL_PumpEvents();
+
+        // catch multiple inputs in succession
+        bool first_event_polled_this_loop = true;
 
         while (SDL_PollEvent(&e))
         {
+            if (first_event_polled_this_loop)
+            {
+                std::this_thread::sleep_for(std::chrono::milliseconds(500));
+                first_event_polled_this_loop = false;
+            }
+            // If user closes the window
             // If user closes the window
             if (e.type == SDL_QUIT)
             {
